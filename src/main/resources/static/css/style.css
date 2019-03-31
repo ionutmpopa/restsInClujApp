@@ -1,0 +1,46 @@
+#bg-grad {
+  background-image: url(/images/bg-img.png);
+  color: #ffffff;
+}
+
+/* NAV */
+
+#logo {
+  width: 10vh;
+}
+
+body {
+  height: 100vh;
+}
+
+li a {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.orange-button {
+  background-color: #ef7735;
+  color: #fff;
+  font-weight: 700;
+}
+
+section {
+  margin-top: 7%;
+}
+
+/* BODY */
+
+#body-title {
+  margin-top: 50px;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+#body-text {
+  color: #dfdfdf;
+}
+
+#body-section img {
+  width: 90%;
+}
