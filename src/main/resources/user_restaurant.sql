@@ -22,7 +22,11 @@ CREATE TABLE app_user (
   email     VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
   first_name      VARCHAR(255) NOT NULL,
+<<<<<<< HEAD
   password  VARCHAR(255) NOT NULL
+=======
+  password  VARCHAR(255) NOT NULL,
+>>>>>>> c170ddbef54f085103a547f6d7a51db56046fadc
 );
 
 
@@ -36,7 +40,11 @@ CREATE TABLE user_role (
   role_id numeric not null,
   FOREIGN KEY ("user_id") REFERENCES app_user ("id"),
   FOREIGN KEY ("role_id") REFERENCES role ("id")
+<<<<<<< HEAD
 );
+=======
+)
+>>>>>>> c170ddbef54f085103a547f6d7a51db56046fadc
 
 --- CREATE table for RESTAURANTS
 
