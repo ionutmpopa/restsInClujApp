@@ -3,6 +3,10 @@
   color: #ffffff;
 }
 
+a :link , :visited {
+  text-decoration: none;
+}
+
 /* NAV */
 
 #logo {
