@@ -57,3 +57,17 @@ description VARCHAR(100));
 
 
 select * from restaurant;
+
+
+--- CREATE table for REVIEWS ----
+
+CREATE TABLE review.review
+(
+  id serial NOT NULL,
+  title character varying,
+  review character varying,
+  date_of_visit timestamp without time zone,
+  date_of_review timestamp without time zone,
+  rating bigint,
+  CONSTRAINT review_pkey PRIMARY KEY (id)
+)
