@@ -9,24 +9,57 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="/css/custom.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <!--<link rel="stylesheet" th:href="@{../static/style.css}" />-->
 
-    <title>Rests In Cluj</title>
+    <title>RestInCluj</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand h1" href="#">RestsClujAPP</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<body id="bg-grad">
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbar10"
+        >
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link active" href="/">Home</a>
-                <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="/restaurant">Places to eat</a>
-                <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="/logout">Logout</a>
-            </div>
+        <div class="navbar-collapse collapse" id="navbar10">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" id="logo" />
+            </a>
+
+            <ul class="navbar-nav nav-fill w-100">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/restaurant">Places to Eat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Top Rated</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a
+                            sec:authorize="!isAuthenticated()" href="/login"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >SIGN IN</a>
+                    <a
+                            sec:authorize="isAuthenticated()" href="/logout"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >LOG OUT</a>
+                </li>
+                <!--<li class="nav-item">-->
+                <!---->
+                <!--</li>-->
+            </ul>
         </div>
     </div>
 </nav>
@@ -54,11 +87,11 @@
 
         <tbody>
         <tr th:each="tempRestaurant: ${restaurants}">
-            <td th:text="${tempRestaurant.name}"></td>
-            <td th:text="${tempRestaurant.address}"></td>
-            <td th:text="${tempRestaurant.capacity}"></td>
-            <td th:text="${tempRestaurant.restType}"></td>
-            <td th:text="${tempRestaurant.description}"></td>
+            <td th:style="${'color: white;'}" th:text="${tempRestaurant.name}"></td>
+            <td th:style="${'color: white;'}" th:text="${tempRestaurant.address}"></td>
+            <td th:style="${'color: white;'}" th:text="${tempRestaurant.capacity}"></td>
+            <td th:style="${'color: white;'}" th:text="${tempRestaurant.restType}"></td>
+            <td th:style="${'color: white;'}" th:text="${tempRestaurant.description}"></td>
             <td>
 
                 <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn btn-success bt-sm mb-3">

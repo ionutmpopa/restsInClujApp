@@ -1,86 +1,127 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://wwww.thymeleaf.org"
-      xmlns:sec="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="/css/custom.css"/>
-
-    <title>Rests In Cluj</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <title>RestInCluj</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand h1" href="#">RestsClujAPP</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<body id="bg-grad">
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbar10"
+        >
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link active" href="/">Home</a>
-                <a sec:authorize="isAuthenticated()" class="nav-item nav-link" href="/restaurant">Places to eat</a>
-                <a  sec:authorize="isAuthenticated()" class="nav-item nav-link" href="/logout">Logout</a>
+        <div class="navbar-collapse collapse" id="navbar10">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" id="logo"/>
+            </a>
 
-            </div>
+            <ul class="navbar-nav nav-fill w-100">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/restaurant">Places to Eat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Most Rated</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a
+                            href="#"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >SIGN IN</a
+                    >
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
-<div class="container mt-5">
-    <div class="card text-white bg-dark mb-3">
-        <div class="card-header">
-            Add / Edit Restaurant
+<section id="body-section">
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card bg-dark">
+                    <div class="card-header h2 text-center">
+                        Add / Edit Restaurant
+                    </div>
+                    <div class="card-body">
+                        <form method="post" th:action="@{/restaurant/save}" th:object="${restaurant}">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="name">Restaurant Name</label>
+                                        <input th:field="*{name}" type="text" class="form-control" id="name"
+                                               placeholder="Restaurant Name"/>
+                                    </div>
+                                </li>
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="address">Restaurant Address</label>
+                                        <input th:field="*{address}" type="text" class="form-control" id="address"
+                                               placeholder="Restaurant Address"/>
+                                    </div>
+                                </li>
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="capacity">Capacity</label>
+                                        <input th:field="*{capacity}" type="text" class="form-control" id="capacity"
+                                               placeholder="Capacity"/>
+                                    </div>
+                                </li>
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="type">Restaurant Type</label>
+                                        <input th:field="*{restType}" type="text" class="form-control" id="type"
+                                               placeholder="Restaurant Type"/>
+                                    </div>
+                                </li>
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <input th:field="*{description}" type="text" class="form-control"
+                                               id="description"
+                                               placeholder="Description"/>
+                                    </div>
+                                </li>
+
+                                <div th:if="${restaurant.id != null}">
+                                    <input th:field="*{id}" type="hidden" class="form-control" id="id"
+                                           placeholder="Id"/>
+                                </div>
+
+
+                                <input class="btn btn-success" type="submit" value="Save"/>
+
+                                <a href="/restaurant">
+                                    <input class="btn btn-danger" type="button" value="Cancel"/>
+                                </a>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <form method="post" th:action="@{/restaurant/save}" th:object="${restaurant}">
-                <div class="form-group">
-                    <label for="name">Restaurant Name</label>
-                    <input th:field="*{name}" type="text" class="form-control" id="name"
-                           placeholder="Restaurant Name"/>
-                </div>
-                <div class="form-group">
-                    <label for="address">Restaurant Address</label>
-                    <input th:field="*{address}" type="text" class="form-control" id="address"
-                           placeholder="Restaurant Address"/>
-                </div>
-                <div class="form-group">
-                    <label for="capacity">Capacity</label>
-                    <input th:field="*{capacity}" type="text" class="form-control" id="capacity"
-                           placeholder="Capacity"/>
-                </div>
-                <div class="form-group">
-                    <label for="type">Restaurant Type</label>
-                    <input th:field="*{restType}" type="text" class="form-control" id="type"
-                           placeholder="Restaurant Type"/>
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input th:field="*{description}" type="text" class="form-control" id="description"
-                           placeholder="Description"/>
-                </div>
-
-                <div th:if="${restaurant.id != null}">
-                    <input th:field="*{id}" type="hidden" class="form-control" id="id" placeholder="Id"/>
-                </div>
-
-
-                <input class="btn btn-success" type="submit" value="Save"/>
-
-                <a href="/restaurant">
-                    <input class="btn btn-danger" type="button" value="Cancel"/>
-                </a>
-            </form>
-
     </div>
-</div>
-</div>
+</section>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

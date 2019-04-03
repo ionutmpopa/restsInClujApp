@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
+<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8"/>
@@ -25,16 +26,16 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse" id="navbar10">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="/images/logo.png" id="logo" />
             </a>
 
             <ul class="navbar-nav nav-fill w-100">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home </a>
+                    <a class="nav-link" href="/">Home </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Places to Eat</a>
+                    <a class="nav-link" href="/restaurant">Places to Eat</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Most Rated</a>
@@ -44,11 +45,15 @@
                 </li>
                 <li class="nav-item">
                     <a
-                            href="/login"
+                            sec:authorize="!isAuthenticated()" href="/login"
                             class="mt-2 btn btn-lg orange-button"
                             role="button"
-                    >SIGN IN</a
-                    >
+                    >SIGN IN</a>
+                    <a
+                            sec:authorize="isAuthenticated()" href="/logout"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >LOG OUT</a>
                 </li>
             </ul>
         </div>
