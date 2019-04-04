@@ -4,9 +4,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class Review extends AbstractModel{
+public class Review extends AbstractModel {
 
-    private long id;
+    private long restaurant_id;
 
     private String title;
 
@@ -21,13 +21,13 @@ public class Review extends AbstractModel{
     private Rating rating;
 
     @Override
-    public void setId(long id) {
-        this.id = id;
+    public void setRestaurant_id(long restaurant_id) {
+        this.restaurant_id = restaurant_id;
     }
 
     @Override
-    public long getId() {
-        return id;
+    public long getRestaurant_id() {
+        return restaurant_id;
     }
 
     public Rating getRating() {

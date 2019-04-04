@@ -48,13 +48,13 @@
 					<div class="form-group">
 						<label for="firstName">Username</label> 
 						<input type="text"
-							class="form-control" id="username" name="username"
+							class="form-control" restaurant_id="username" name="username"
 							placeHolder="Username" "/>
 					</div>
 					<div class="form-group">
 						<label for="lastName">Password</label> 
 						<input type="password"
-							class="form-control" id="password" name="password"
+							class="form-control" restaurant_id="password" name="password"
 							placeHolder="Password" />
 					</div>
 
@@ -67,7 +67,7 @@
 							</ul>
 						</div>
 					</div>
-					<br /> <input type="hidden" class="form-control" id="id" value="0" />
+					<br /> <input type="hidden" class="form-control" restaurant_id="restaurant_id" value="0" />
 			</form>
 			</div>
 		</div>

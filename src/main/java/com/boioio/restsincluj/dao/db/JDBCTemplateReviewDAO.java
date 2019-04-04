@@ -44,16 +44,17 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
 
         String sql = "";
         Long newId = null;
-        if (model.getId() > 0) {
-            sql = "update review set title=?, date_of_review=?, date_of_visit=?, review=?, rating=?"
+        if (model.getRestaurant_id() > 0) {
+            sql = "update review set restaurant_id=?, title=?, date_of_review=?, date_of_visit=?, review=?, rating=?"
                     + "where id = ? returning id";
             newId = jdbcTemplate.queryForObject(sql, new Object[]{
+                    model.getRestaurant_id(),
                     model.getTitle(),
                     new Timestamp(model.getDateOfReview().getTime()),
                     new Timestamp(model.getDateOfVisit().getTime()),
                     model.getReview(),
                     model.getRating().name(),
-                    model.getId()
+                    model.getRestaurant_id()
 
             }, new RowMapper<Long>() {
                 public Long mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -61,10 +62,11 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
                 }
             });
         } else {
-            sql = "insert into review (title, date_of_review, date_of_visit, review, rating) "
+            sql = "insert into review (restaurant_id, title, date_of_review, date_of_visit, review, rating) "
                     + "values (?, ?, ?, ?, ?) returning id";
 
             newId = jdbcTemplate.queryForObject(sql, new Object[]{
+                    model.getRestaurant_id(),
                     model.getTitle(),
                     new Timestamp(model.getDateOfReview().getTime()),
                     new Timestamp(model.getDateOfVisit().getTime()),
@@ -77,14 +79,14 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
                 }
             });
         }
-        model.setId(newId);
+        model.setRestaurant_id(newId);
 
         return model;
     }
 
     @Override
     public boolean delete(Review model) {
-        return jdbcTemplate.update("delete from review where id = ?", model.getId()) > 0;
+        return jdbcTemplate.update("delete from review where id = ?", model.getRestaurant_id()) > 0;
     }
 
     @Override
@@ -99,8 +101,8 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
     public Collection<Review> searchByRating(String query) {
         return jdbcTemplate.query("select * from review "
                             + "where rating like ?",
-                new String[]{"%" + query.toLowerCase() + "%"},
-                new ReviewMapper());
+                            new String[]{"%" + query.toLowerCase() + "%"},
+                            new ReviewMapper());
 
     }
 
@@ -110,6 +112,7 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
         public Review mapRow(ResultSet rs, int arg1) throws SQLException {
             Review review = new Review();
             review.setId(rs.getLong("id"));
+            review.setRestaurant_id(rs.getLong("restaurant_id"));
             review.setTitle(rs.getString("title"));
             review.setDateOfReview(new Date(rs.getTimestamp("date_of_review").getTime()));
             review.setDateOfVisit(new Date(rs.getTimestamp("date_of_visit").getTime()));

@@ -22,11 +22,7 @@ CREATE TABLE app_user (
   email     VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
   first_name      VARCHAR(255) NOT NULL,
-<<<<<<< HEAD
   password  VARCHAR(255) NOT NULL
-=======
-  password  VARCHAR(255) NOT NULL,
->>>>>>> c170ddbef54f085103a547f6d7a51db56046fadc
 );
 
 
@@ -40,11 +36,7 @@ CREATE TABLE user_role (
   role_id numeric not null,
   FOREIGN KEY ("user_id") REFERENCES app_user ("id"),
   FOREIGN KEY ("role_id") REFERENCES role ("id")
-<<<<<<< HEAD
 );
-=======
-)
->>>>>>> c170ddbef54f085103a547f6d7a51db56046fadc
 
 --- CREATE table for RESTAURANTS
 
@@ -61,13 +53,26 @@ select * from restaurant;
 
 --- CREATE table for REVIEWS ----
 
-CREATE TABLE review.review
+DROP TABLE IF EXISTS review;
+
+DROP SEQUENCE IF EXISTS review_id_seq;
+CREATE SEQUENCE review_id_seq;
+
+CREATE TABLE review
 (
-  id serial NOT NULL,
-  title character varying,
-  review character varying,
-  date_of_visit timestamp without time zone,
-  date_of_review timestamp without time zone,
+  id INT DEFAULT NEXTVAL('review_id_seq'),
+  restaurant_id INT REFERENCES restaurant(id),
+  title VARCHAR(15),
+  review VARCHAR(2000),
+  date_of_visit DATE,
+  date_of_review DATE,
   rating bigint,
   CONSTRAINT review_pkey PRIMARY KEY (id)
-)
+);
+
+insert into review
+(restaurant_id, title, review, date_of_visit, date_of_review, rating)
+values
+(2, 'Terrible', 'This was a very nastsy experience!', '2019-01-02', '2019-01-03', 1);
+
+select * from review;
