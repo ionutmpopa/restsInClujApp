@@ -20,12 +20,11 @@ public class Review extends AbstractModel {
 
     private Rating rating;
 
-    @Override
+
     public void setRestaurant_id(long restaurant_id) {
         this.restaurant_id = restaurant_id;
     }
 
-    @Override
     public long getRestaurant_id() {
         return restaurant_id;
     }

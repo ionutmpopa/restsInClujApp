@@ -13,7 +13,7 @@
     <title>RestInCluj</title>
 </head>
 
-<body restaurant_id="bg-grad">
+<body id="bg-grad">
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <button
@@ -24,9 +24,9 @@
         >
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse" restaurant_id="navbar10">
+        <div class="navbar-collapse collapse" id="navbar10">
             <a class="navbar-brand" href="/">
-                <img src="/images/logo.png" restaurant_id="logo"/>
+                <img src="/images/logo.png" id="logo"/>
             </a>
 
             <ul class="navbar-nav nav-fill w-100">
@@ -44,18 +44,17 @@
                 </li>
                 <li class="nav-item">
                     <a
-                            href="#"
+                            href="/logout"
                             class="mt-2 btn btn-lg orange-button"
                             role="button"
-                    >SIGN IN</a
-                    >
+                    >LOG OUT</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<section restaurant_id="body-section">
+<section id="body-section">
     <div class="container ">
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -65,32 +64,32 @@
                     </div>
                     <div class="card-body">
                         <form method="post" th:action="@{/restaurant/save}" th:object="${restaurant}">
-                            <ul class="list-group list-group-flush">
+                            <!--<ul class="list-group list-group-flush">-->
                                 <li class="list-group-item bg-dark">
                                     <div class="form-group">
                                         <label for="name">Restaurant Name</label>
-                                        <input th:field="*{name}" type="text" class="form-control" restaurant_id="name"
+                                        <input th:field="*{name}" type="text" class="form-control" id="name"
                                                placeholder="Restaurant Name"/>
                                     </div>
                                 </li>
                                 <li class="list-group-item bg-dark">
                                     <div class="form-group">
                                         <label for="address">Restaurant Address</label>
-                                        <input th:field="*{address}" type="text" class="form-control" restaurant_id="address"
+                                        <input th:field="*{address}" type="text" class="form-control" id="address"
                                                placeholder="Restaurant Address"/>
                                     </div>
                                 </li>
                                 <li class="list-group-item bg-dark">
                                     <div class="form-group">
                                         <label for="capacity">Capacity</label>
-                                        <input th:field="*{capacity}" type="text" class="form-control" restaurant_id="capacity"
+                                        <input th:field="*{capacity}" type="text" class="form-control" id="capacity"
                                                placeholder="Capacity"/>
                                     </div>
                                 </li>
                                 <li class="list-group-item bg-dark">
                                     <div class="form-group">
                                         <label for="type">Restaurant Type</label>
-                                        <input th:field="*{restType}" type="text" class="form-control" restaurant_id="type"
+                                        <input th:field="*{restType}" type="text" class="form-control" id="type"
                                                placeholder="Restaurant Type"/>
                                     </div>
                                 </li>
@@ -98,13 +97,13 @@
                                     <div class="form-group">
                                         <label for="description">Description</label>
                                         <input th:field="*{description}" type="text" class="form-control"
-                                               restaurant_id="description"
+                                               id="description"
                                                placeholder="Description"/>
                                     </div>
                                 </li>
 
-                                <div th:if="${restaurant.restaurant_id != null}">
-                                    <input th:field="*{restaurant_id}" type="hidden" class="form-control" restaurant_id="restaurant_id"
+                                <div th:if="${restaurant.id != null}">
+                                    <input th:field="*{id}" type="hidden" class="form-control" id="id"
                                            placeholder="Id"/>
                                 </div>
 
@@ -114,7 +113,7 @@
                                 <a href="/restaurant">
                                     <input class="btn btn-danger" type="button" value="Cancel"/>
                                 </a>
-                            </ul>
+                            <!--</ul>-->
                         </form>
                     </div>
                 </div>

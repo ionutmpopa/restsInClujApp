@@ -97,4 +97,19 @@ public class RestaurantController {
 
         return modelAndView;
     }
+
+    @RequestMapping(value = "/listReview{id}", method = RequestMethod.GET)
+    public ModelAndView listReview(@PathVariable("id") long id) {
+        ModelAndView result = new ModelAndView("restaurant/list");
+
+        Restaurant restaurant = restaurantService.findById(id);
+        //ProjectCost projectCost = new ProjectCost();
+        String review = restaurantService.listRestaurantAndReview(id);
+//        projectCost.setCost(cost);
+//        projectCost.setName(project.getName());
+
+        result.addObject("review", review);
+
+        return result;
+    }
 }
