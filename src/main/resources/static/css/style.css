@@ -48,3 +48,7 @@ section {
 #body-section img {
   width: 90%;
 }
+
+.orange-border {
+  border-bottom: 1px #ef7735 solid;
+}
