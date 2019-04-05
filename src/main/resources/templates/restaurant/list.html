@@ -39,6 +39,9 @@
                     <a class="nav-link" href="/restaurant">Places to Eat</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/review">Reviews</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">Top Rated</a>
                 </li>
                 <li class="nav-item">
@@ -89,10 +92,6 @@
         <tbody>
         <tr th:each="tempRestaurant: ${restaurants}">
             <td th:style="${'color: white;'}" th:text="${tempRestaurant.name}">
-            <td>
-
-            </td>
-
             </td>
             <td th:style="${'color: white;'}" th:text="${tempRestaurant.address}"></td>
             <td th:style="${'color: white;'}" th:text="${tempRestaurant.capacity}"></td>

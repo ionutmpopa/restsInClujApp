@@ -110,9 +110,9 @@ public class RestaurantController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/reviewList{id}", method = RequestMethod.GET)
-    public ModelAndView reviewList(@PathVariable("id") long id) {
-        ModelAndView result = new ModelAndView("restaurant/reviewList");
+    @RequestMapping(value = "/reviewlist{id}", method = RequestMethod.GET)
+    public ModelAndView reviewlist(@PathVariable("id") long id) {
+        ModelAndView result = new ModelAndView("restaurant/reviewlist");
 
         Collection<Restaurant> restaurants = restaurantService.listAll();
         Collection<Review> reviews = reviewService.listAll();

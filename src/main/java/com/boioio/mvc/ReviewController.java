@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,93 +25,105 @@ import java.util.*;
 @RequestMapping("/review")
 public class ReviewController {
 
-        private static Logger LOGGER = LoggerFactory.getLogger("ReviewController");
+    private static Logger LOGGER = LoggerFactory.getLogger("ReviewController");
 
-        @Autowired
-        private ReviewService reviewService;
+    @Autowired
+    private ReviewService reviewService;
 
-        @Autowired
-        private RestaurantService restaurantService;
+    @Autowired
+    private RestaurantService restaurantService;
 
-        @RequestMapping("")
-        public ModelAndView list() {
-            ModelAndView result = new ModelAndView("review/list");
+    @RequestMapping("")
+    public ModelAndView list() {
+        ModelAndView result = new ModelAndView("review/list");
 
 
-            Collection<Review> reviews = reviewService.listAll();
-            result.addObject("reviews", reviews);
-            return result;
+        Collection<Review> reviews = reviewService.listAll();
+        Collection<Restaurant> restaurants = restaurantService.listAll();
+
+
+        result.addObject("reviews", reviews);
+
+        Map<String, String> allReviews = new HashMap<>();
+        for (Review review : reviews) {
+            Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
+            allReviews.put(restaurant.getId() + "", restaurant.getName());
+
         }
+        result.addObject("allReviews", allReviews);
 
-        @RequestMapping(value = "/add", method = RequestMethod.GET)
-        public ModelAndView add() {
-            ModelAndView modelAndView = new ModelAndView("review/add");
+        return result;
+    }
 
-            Collection<Restaurant> restaurants = restaurantService.listAll();
-            modelAndView.addObject("restaurants", restaurants);
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public ModelAndView add() {
+        ModelAndView modelAndView = new ModelAndView("review/add");
 
-            List<Rating> ratings = new LinkedList<>();
-            ratings.add(Rating.valueOf("TERRIBLE"));
-            ratings.add(Rating.valueOf("POOR"));
-            ratings.add(Rating.valueOf("AVERAGE"));
-            ratings.add(Rating.valueOf("GOOD"));
-            ratings.add(Rating.valueOf("EXCELLENT"));
+        Collection<Restaurant> restaurants = restaurantService.listAll();
+        modelAndView.addObject("restaurants", restaurants);
 
-            modelAndView.addObject("ratings", ratings);
+        List<Rating> ratings = new LinkedList<>();
+        ratings.add(Rating.valueOf("TERRIBLE"));
+        ratings.add(Rating.valueOf("POOR"));
+        ratings.add(Rating.valueOf("AVERAGE"));
+        ratings.add(Rating.valueOf("GOOD"));
+        ratings.add(Rating.valueOf("EXCELLENT"));
 
-            modelAndView.addObject("review", new Review());
-            return modelAndView;
-        }
+        modelAndView.addObject("ratings", ratings);
 
-        @RequestMapping("/edit")
-        public ModelAndView edit(long id) {
-            Review review = reviewService.get(id);
-            ModelAndView modelAndView = new ModelAndView("review/add");
-            modelAndView.addObject("review", review);
-            return modelAndView;
-        }
+        modelAndView.addObject("review", new Review());
+        return modelAndView;
+    }
 
-        @RequestMapping("/delete")
-        public String delete(long id) {
-            reviewService.delete(id);
-            return "redirect:/review";
-        }
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable("id") long id) {
+        Review review = reviewService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("review/add");
+        modelAndView.addObject("review", review);
+        return modelAndView;
+    }
 
-        @RequestMapping("/save")
-        public ModelAndView save(@Valid Review review,
-                                 BindingResult bindingResult) {
+    @RequestMapping(value= "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") long id) {
+        reviewService.delete(id);
+        return "redirect:/review";
+    }
 
-            ModelAndView modelAndView = new ModelAndView();
-            if (!bindingResult.hasErrors()) {
-                try {
-                    reviewService.save(review);
-                    RedirectView redirectView = new RedirectView("/review");
-                    modelAndView.setView(redirectView);
-                } catch (ValidationException ex) {
+    @RequestMapping("/save")
+    public ModelAndView save(@Valid Review review,
+                             BindingResult bindingResult) {
 
-                    LOGGER.error("validation error", ex);
+        ModelAndView modelAndView = new ModelAndView();
+        if (!bindingResult.hasErrors()) {
+            try {
+                reviewService.save(review);
+                RedirectView redirectView = new RedirectView("/review");
+                modelAndView.setView(redirectView);
+            } catch (ValidationException ex) {
 
-                    List<String> errors = new LinkedList<>();
-                    errors.add(ex.getMessage());
-                    modelAndView = new ModelAndView("review/add");
-                    modelAndView.addObject("errors", errors);
-                    modelAndView.addObject("review", review);
-                }
+                LOGGER.error("validation error", ex);
 
-            } else {
                 List<String> errors = new LinkedList<>();
-
-                for (FieldError error :
-                        bindingResult.getFieldErrors()) {
-                    errors.add(error.getField() + ":" + error.getDefaultMessage());
-                }
-
+                errors.add(ex.getMessage());
                 modelAndView = new ModelAndView("review/add");
                 modelAndView.addObject("errors", errors);
                 modelAndView.addObject("review", review);
             }
 
-            return modelAndView;
+        } else {
+            List<String> errors = new LinkedList<>();
+
+            for (FieldError error :
+                    bindingResult.getFieldErrors()) {
+                errors.add(error.getField() + ":" + error.getDefaultMessage());
+            }
+
+            modelAndView = new ModelAndView("review/add");
+            modelAndView.addObject("errors", errors);
+            modelAndView.addObject("review", review);
         }
 
+        return modelAndView;
     }
+
+}

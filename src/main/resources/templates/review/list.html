@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-
-<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
 <html lang="en" xmlns:th="http://wwww.thymeleaf.org"
       xmlns:sec="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
     <link rel="stylesheet" href="css/style.css"/>
+    <!--<link rel="stylesheet" th:href="@{../static/style.css}" />-->
+
     <title>RestInCluj</title>
 </head>
 
@@ -41,7 +42,7 @@
                     <a class="nav-link" href="/review">Reviews</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Most Rated</a>
+                    <a class="nav-link" href="#">Top Rated</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About Us</a>
@@ -58,35 +59,64 @@
                             role="button"
                     >LOG OUT</a>
                 </li>
+                <!--<li class="nav-item">-->
+                <!---->
+                <!--</li>-->
             </ul>
         </div>
     </div>
 </nav>
 
-<section id="body-section">
-    <div class="container ">
-        <div class="row">
-            <div class="col-md-5">
-                <div class="text-left" id="body-title">
-                    Review your favorite eating place or find a new one!
+<div class="container mt-5">
+    <h3>Review List</h3>
+    <hr/>
+
+    <!--Button add projects-->
+    <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn btn-primary bt-sm mb-3">
+        Add Review
+    </a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Restaurant Name</th>
+            <th>Review</th>
+            <th>Date of visit</th>
+            <th>Date of review</th>
+            <th>Rating</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempReview: ${reviews}">
+            <td>
+                <div th:each="name : ${allReviews}">
+                    <div th:if="${name.key} == ${tempReview.restaurant_id}" th:style="${'color: white;'}" th:text="${allReviews[name.key]}"></div>
                 </div>
-                <div class="text-left mt-3" id="body-text">
-                    Help the rest of the world discover your favorite eating place in
-                    Cluj !
-                </div>
-                <a
-                        href="#"
-                        class="mt-2 btn btn-lg mt-3 orange-button"
-                        role="button"
-                >Search Here!
+            </td>
+            <td th:style="${'color: white;'}" th:text="${tempReview.review}"></td>
+            <td th:style="${'color: white;'}" th:text="${#dates.format(tempReview.dateOfVisit, 'dd-MMM-yyyy')}"></td>
+            <td th:style="${'color: white;'}" th:text="${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></td>
+            <td th:style="${'color: white;'}" th:text="${tempReview.rating}"></td>
+
+            <td>
+                <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn btn-success bt-sm mb-3">
+                    Add review
                 </a>
-            </div>
-            <div class="col-md-6 offset-md-1">
-                <img src="/images/burger.png" alt="" />
-            </div>
-        </div>
-    </div>
-</section>
+
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/edit/{id} (id=${tempReview.id})}" class="btn btn-info bt-sm mb-3">
+                    Edit
+                </a>
+
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/delete/{id} (id=${tempReview.id})}" class="btn btn-danger bt-sm mb-3">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

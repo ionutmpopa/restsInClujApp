@@ -62,17 +62,19 @@ CREATE TABLE review
 (
   id INT DEFAULT NEXTVAL('review_id_seq'),
   restaurant_id INT REFERENCES restaurant(id),
-  title VARCHAR(15),
   review VARCHAR(2000),
   date_of_visit DATE,
   date_of_review DATE,
-  rating bigint,
+  rating VARCHAR(25),
   CONSTRAINT review_pkey PRIMARY KEY (id)
 );
 
 insert into review
-(restaurant_id, title, review, date_of_visit, date_of_review, rating)
+(restaurant_id, review, date_of_visit, date_of_review, rating)
 values
-(2, 'Terrible', 'This was a very nastsy experience!', '2019-01-02', '2019-01-03', 1);
+(2, 'This was a very nastsy experience!', '2019-01-02', '2019-01-03', 'POOR');
 
-select * from review;
+insert into review
+(restaurant_id, review, date_of_visit, date_of_review, rating)
+values
+(2, 'This was a bad experience!', '2019-01-02', '2019-01-03', 'AVERAGE');
