@@ -28,7 +28,7 @@ public class ReviewService {
         return reviewDAO.getAll();
     }
 
-    public Collection<Review> search( String query) {
+    public Collection<Review> search(String query) {
         LOGGER.debug("Searching for " + query);
         return reviewDAO.searchByTitle(query);
     }
@@ -58,16 +58,12 @@ public class ReviewService {
     public void save(Review review) throws ValidationException {
         LOGGER.debug("Saving: " + review);
         validate(review);
-
         reviewDAO.update(review);
     }
 
     private void validate(Review review) throws ValidationException {
         Date currentDate = new Date();
         List<String> errors = new LinkedList<String>();
-        if (StringUtils.isEmpty(review.getTitle())) {
-            errors.add("Title is Empty");
-        }
 
         if (review.getDateOfReview() == null) {
             errors.add("Date of review is Empty");
@@ -76,11 +72,9 @@ public class ReviewService {
                 errors.add("Date of review in future");
             }
         }
-
         if(review.getDateOfVisit() == null){
             errors.add("Date of visit is Empty") ;
         }
-
 
         if (StringUtils.isEmpty(review.getReview())) {
             errors.add("Review is Empty");
@@ -88,6 +82,10 @@ public class ReviewService {
             if (currentDate.before((review.getDateOfVisit()))) {
                 errors.add("Date of visit in future");
             }
+        }
+
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors.toArray(new String[] {}));
         }
 
     }

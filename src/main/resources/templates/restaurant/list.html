@@ -81,6 +81,7 @@
             <th>Capacity</th>
             <th>Restaurant Type</th>
             <th>Description</th>
+            <th>Review</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -92,6 +93,11 @@
             <td th:style="${'color: white;'}" th:text="${tempRestaurant.capacity}"></td>
             <td th:style="${'color: white;'}" th:text="${tempRestaurant.restType}"></td>
             <td th:style="${'color: white;'}" th:text="${tempRestaurant.description}"></td>
+            <td>
+                <div th:each="name : ${allReviews}">
+                    <div th:if="${name.key} == ${tempRestaurant.id}" th:style="${'color: white;'}" th:text="${allReviews[name.key]}"></div>
+                </div>
+            </td>
             <td>
 
                 <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn btn-success bt-sm mb-3">

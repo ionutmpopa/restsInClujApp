@@ -1,10 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            var selectedRestaurant = 0;
+
+            $('#inputGroupSelect01').on('change', function () {
+                selectedRestaurant = $(this).find("option:selected").val();
+
+                alert(selectedRestaurant);
+            });
+
+
+
+            $("#myform").on("submit", function () {
+                var selectedRestaurantWithoutCommas = selectedRestaurant.replace(/,/g, '');
+                document.getElementById('restaurant_id').value = selectedRestaurantWithoutCommas;
+                return true;
+            })
+        });
+
+    </script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <title>RestInCluj</title>
+</head>
+
+<body id="bg-grad">
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbar10"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar10">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" id="logo"/>
+            </a>
+
+            <ul class="navbar-nav nav-fill w-100">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/restaurant">Places to Eat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Most Rated</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a
+                            href="/logout"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >LOG OUT</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section id="body-section">
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card bg-dark">
+                    <div class="card-header h2 text-center">
+                        Add Review
+                    </div>
+                    <div class="card-body">
+                        <form method="post" th:action="@{/review/save}" th:object="${review}" id="myform">
+                            <!--<ul class="list-group list-group-flush">-->
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="inputGroupSelect01">Restaurant</label>
+                                    <select class="custom-select" id="inputGroupSelect01">
+                                        <option selected="">Choose...</option>
+                                        <div th:each="restaurant : ${restaurants}">
+                                            <option th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <input id="restaurant_id" name="restaurant_id" type="hidden" th:value="${review.restaurant_id}"/>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="dateOfVisit">Date of visit</label>
+                                    <input th:field="*{dateOfVisit}" type="text" class="form-control" id="dateOfVisit"
+                                           placeholder="Date of visit"/>
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="dateOfReview">Date of review</label>
+                                    <input th:field="*{dateOfReview}" type="text" class="form-control" id="dateOfReview"
+                                           placeholder="Date of review"/>
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="review">Review</label>
+                                    <input th:field="*{review}" type="text" class="form-control" id="review"
+                                           placeholder="Review"/>
+                                </div>
+                            </li>
+                            <!--<li class="list-group-item bg-dark">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label for="rating">Rating</label>-->
+                                    <!--<input th:field="*{rating}" type="text" class="form-control" id="rating"-->
+                                           <!--placeholder="Rating"/>-->
+                                <!--</div>-->
+                            <!--</li>-->
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="rating">Rating</label>
+                                    <select class="custom-select" id="rating">
+                                        <option selected="">Choose...</option>
+                                        <div th:each="rating : ${ratings}">
+                                            <option th:value="${rating}" th:text="${rating}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <input id="rating_id" name="rating_id" type="hidden" th:value="${review.rating}"/>
+                            </li>
+
+                            <div th:if="${review.id != null}">
+                                <input th:field="*{id}" type="hidden" class="form-control" id="id"
+                                       placeholder="Id"/>
+                            </div>
+
+
+                            <input class="btn btn-success" type="submit" value="Save"/>
+
+                            <a href="/restaurant">
+                                <input class="btn btn-danger" type="button" value="Cancel"/>
+                            </a>
+                            <!--</ul>-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

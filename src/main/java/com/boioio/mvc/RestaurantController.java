@@ -1,8 +1,10 @@
 package com.boioio.mvc;
 
 import com.boioio.restsincluj.domain.Restaurant;
+import com.boioio.restsincluj.domain.Review;
 import com.boioio.restsincluj.exception.ValidationException;
 import com.boioio.restsincluj.service.RestaurantService;
+import com.boioio.restsincluj.service.ReviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/restaurant")
@@ -29,13 +29,25 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
+    @Autowired
+    private ReviewService reviewService;
+
     @RequestMapping("")
     public ModelAndView listAll() {
         ModelAndView result = new ModelAndView("restaurant/list");
 
         Collection<Restaurant> restaurants = restaurantService.listAll();
+        Collection<Review> reviews = reviewService.listAll();
 
         result.addObject("restaurants", restaurants);
+
+        Map<String, String> allReviews = new HashMap<>();
+        for (Review review : reviews) {
+            Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
+            allReviews.put(review.getRestaurant_id() + "", review.getReview());
+
+        }
+        result.addObject("allReviews", allReviews);
 
         return result;
     }

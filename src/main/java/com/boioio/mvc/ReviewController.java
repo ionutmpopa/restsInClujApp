@@ -1,7 +1,10 @@
 package com.boioio.mvc;
 
+import com.boioio.restsincluj.domain.Rating;
+import com.boioio.restsincluj.domain.Restaurant;
 import com.boioio.restsincluj.domain.Review;
 import com.boioio.restsincluj.exception.ValidationException;
+import com.boioio.restsincluj.service.RestaurantService;
 import com.boioio.restsincluj.service.ReviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,13 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/review")
@@ -27,6 +29,9 @@ public class ReviewController {
         @Autowired
         private ReviewService reviewService;
 
+        @Autowired
+        private RestaurantService restaurantService;
+
         @RequestMapping("")
         public ModelAndView list() {
             ModelAndView result = new ModelAndView("review/list");
@@ -34,20 +39,25 @@ public class ReviewController {
 
             Collection<Review> reviews = reviewService.listAll();
             result.addObject("reviews", reviews);
-
             return result;
         }
 
-        @RequestMapping("/add")
+        @RequestMapping(value = "/add", method = RequestMethod.GET)
         public ModelAndView add() {
             ModelAndView modelAndView = new ModelAndView("review/add");
-            modelAndView.addObject("review", new Review());
-            return modelAndView;
-        }
 
-        @RequestMapping("/view")
-        public ModelAndView view() {
-            ModelAndView modelAndView = new ModelAndView("review/view");
+            Collection<Restaurant> restaurants = restaurantService.listAll();
+            modelAndView.addObject("restaurants", restaurants);
+
+            List<Rating> ratings = new LinkedList<>();
+            ratings.add(Rating.valueOf("TERRIBLE"));
+            ratings.add(Rating.valueOf("POOR"));
+            ratings.add(Rating.valueOf("AVERAGE"));
+            ratings.add(Rating.valueOf("GOOD"));
+            ratings.add(Rating.valueOf("EXCELLENT"));
+
+            modelAndView.addObject("ratings", ratings);
+
             modelAndView.addObject("review", new Review());
             return modelAndView;
         }

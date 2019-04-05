@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -18,6 +19,10 @@ public class JdbcTemplateRestaurantDAO implements RestaurantDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public JdbcTemplateRestaurantDAO(DataSource dataSource) {
+        jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
     @Override
     public Collection<Restaurant> getAll() {

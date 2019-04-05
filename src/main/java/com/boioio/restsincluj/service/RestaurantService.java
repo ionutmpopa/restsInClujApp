@@ -80,6 +80,11 @@ public class RestaurantService {
         }
     }
 
+    public Restaurant get(Long id) {
+        LOGGER.debug("Getting employee for id: " + id);
+        return restaurantDAO.findById(id);
+    }
+
     public String listRestaurantAndReview(long restId) {
 
         Collection<Review> reviews = reviewService.listAll();

@@ -2,7 +2,6 @@ package com.boioio.restsincluj.dao.db;
 
 
 import com.boioio.restsincluj.dao.ReviewDAO;
-import com.boioio.restsincluj.domain.Rating;
 import com.boioio.restsincluj.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -35,7 +34,6 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
     @Override
     public Review findById(Long id) {
         return jdbcTemplate.queryForObject("select * from review where id = ?",
-
                 new ReviewMapper(), id);
     }
 
@@ -44,17 +42,16 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
 
         String sql = "";
         Long newId = null;
-        if (model.getRestaurant_id() > 0) {
-            sql = "update review set restaurant_id=?, title=?, date_of_review=?, date_of_visit=?, review=?, rating=?"
+        if (model.getId() > 0) {
+            sql = "update review set restaurant_id=?, date_of_review=?, date_of_visit=?, review=?, rating=?"
                     + "where id = ? returning id";
             newId = jdbcTemplate.queryForObject(sql, new Object[]{
                     model.getRestaurant_id(),
-                    model.getTitle(),
                     new Timestamp(model.getDateOfReview().getTime()),
                     new Timestamp(model.getDateOfVisit().getTime()),
                     model.getReview(),
-                    model.getRating().name(),
-                    model.getRestaurant_id()
+                    model.getRating().toString(),
+                    model.getId()
 
             }, new RowMapper<Long>() {
                 public Long mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -62,31 +59,29 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
                 }
             });
         } else {
-            sql = "insert into review (restaurant_id, title, date_of_review, date_of_visit, review, rating) "
+            sql = "insert into review (restaurant_id, date_of_visit, date_of_review, review, rating) "
                     + "values (?, ?, ?, ?, ?) returning id";
 
             newId = jdbcTemplate.queryForObject(sql, new Object[]{
                     model.getRestaurant_id(),
-                    model.getTitle(),
-                    new Timestamp(model.getDateOfReview().getTime()),
                     new Timestamp(model.getDateOfVisit().getTime()),
+                    new Timestamp(model.getDateOfReview().getTime()),
                     model.getReview(),
-                    model.getRating().name()
-
+                    model.getRating().toString()
             }, new RowMapper<Long>() {
                 public Long mapRow(ResultSet rs, int arg1) throws SQLException {
                     return rs.getLong(1);
                 }
             });
         }
-        model.setRestaurant_id(newId);
+        model.setId(newId);
 
         return model;
     }
 
     @Override
     public boolean delete(Review model) {
-        return jdbcTemplate.update("delete from review where id = ?", model.getRestaurant_id()) > 0;
+        return jdbcTemplate.update("delete from review where id = ?", model.getId()) > 0;
     }
 
     @Override
@@ -113,11 +108,10 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
             Review review = new Review();
             review.setId(rs.getLong("id"));
             review.setRestaurant_id(rs.getLong("restaurant_id"));
-            review.setTitle(rs.getString("title"));
-            review.setDateOfReview(new Date(rs.getTimestamp("date_of_review").getTime()));
             review.setDateOfVisit(new Date(rs.getTimestamp("date_of_visit").getTime()));
+            review.setDateOfReview(new Date(rs.getTimestamp("date_of_review").getTime()));
             review.setReview(rs.getString("review"));
-            review.setRating(Rating.valueOf(rs.getString("rating")));
+            review.setRating(rs.getString("rating"));
             return review;
         }
 
