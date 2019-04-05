@@ -110,17 +110,25 @@ public class RestaurantController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/listReview{id}", method = RequestMethod.GET)
-    public ModelAndView listReview(@PathVariable("id") long id) {
-        ModelAndView result = new ModelAndView("restaurant/list");
+    @RequestMapping(value = "/reviewList{id}", method = RequestMethod.GET)
+    public ModelAndView reviewList(@PathVariable("id") long id) {
+        ModelAndView result = new ModelAndView("restaurant/reviewList");
 
-        Restaurant restaurant = restaurantService.findById(id);
-        //ProjectCost projectCost = new ProjectCost();
-        String review = restaurantService.listRestaurantAndReview(id);
-//        projectCost.setCost(cost);
-//        projectCost.setName(project.getName());
+        Collection<Restaurant> restaurants = restaurantService.listAll();
+        Collection<Review> reviews = reviewService.listAll();
 
-        result.addObject("review", review);
+        result.addObject("restaurants", restaurants);
+
+        Map<String, String> allListReviews = new HashMap<>();
+        for (Review review : reviews) {
+
+            if (review.getRestaurant_id() == id) {
+
+                Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
+                allListReviews.put(review.getRestaurant_id() + "", review.getReview());
+            }
+        }
+        result.addObject("allListReviews", allListReviews);
 
         return result;
     }

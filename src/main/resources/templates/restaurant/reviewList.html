@@ -65,10 +65,11 @@
 </nav>
 
 <div class="container mt-5">
-    <h3>Restaurant List</h3>
+    <h3>Reviews List</h3>
     <hr/>
 
-    <!--Button add projects-->
+
+    Button add projects
     <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/restaurant/add}" class="btn btn-primary bt-sm mb-3">
         Add Restaurant
     </a>
@@ -77,48 +78,17 @@
         <thead class="thead-dark">
         <tr>
             <th>Restaurant Name</th>
-            <th>Restaurant Address</th>
-            <th>Capacity</th>
-            <th>Restaurant Type</th>
-            <th>Description</th>
-            <th>Last Review</th>
-            <th>Action</th>
         </tr>
         </thead>
 
         <tbody>
         <tr th:each="tempRestaurant: ${restaurants}">
             <td th:style="${'color: white;'}" th:text="${tempRestaurant.name}">
-            <td>
 
-            </td>
+                <!--<div th:each="name : ${allListReviews}">-->
+                    <!--<div th:if="${name.key} == ${tempRestaurant.id}" th:style="${'color: white;'}" th:text="${allListReviews[name.key]}"></div>-->
+                <!--</div>-->
 
-            </td>
-            <td th:style="${'color: white;'}" th:text="${tempRestaurant.address}"></td>
-            <td th:style="${'color: white;'}" th:text="${tempRestaurant.capacity}"></td>
-            <td th:style="${'color: white;'}" th:text="${tempRestaurant.restType}"></td>
-            <td th:style="${'color: white;'}" th:text="${tempRestaurant.description}"></td>
-            <td>
-                <div th:each="name : ${allReviews}">
-                    <div th:if="${name.key} == ${tempRestaurant.id}" th:style="${'color: white;'}" th:text="${allReviews[name.key]}"></div>
-                </div>
-            </td>
-            <td>
-
-                <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn btn-success bt-sm mb-3">
-                    Add review
-                </a>
-                <a sec:authorize="isAuthenticated()" th:href="@{/restaurant/reviewList/{id} (id=${tempRestaurant.id})}" class="btn btn-info bt-sm mb-3">
-                    Show All Reviews
-                </a>
-
-                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/restaurant/edit/{id} (id=${tempRestaurant.id})}" class="btn btn-info bt-sm mb-3">
-                    Edit
-                </a>
-
-                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/restaurant/delete/{id} (id=${tempRestaurant.id})}" class="btn btn-danger bt-sm mb-3">
-                    Delete
-                </a>
             </td>
         </tr>
         </tbody>
