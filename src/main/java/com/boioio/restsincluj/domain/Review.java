@@ -11,10 +11,10 @@ public class Review extends AbstractModel {
 
     private String review;
 
-    @DateTimeFormat(pattern = "dd/mm/year")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateOfVisit;
 
-    @DateTimeFormat(pattern = "dd/mm/year")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateOfReview;
 
     private Rating rating;

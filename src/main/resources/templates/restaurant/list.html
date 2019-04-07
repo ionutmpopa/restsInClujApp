@@ -101,7 +101,7 @@
                 <div th:each="name : ${allReviews}">
                     <div th:if="${name.key} == ${tempRestaurant.id}" th:style="${'color: white;'}" th:text="${allReviews[name.key]}"></div>
                 </div>
-                <div th:each="date : ${reviewsDate}">Review on:
+                <div th:each="date : ${reviewsDate}">
                     <div th:if="${date.key} == ${tempRestaurant.id}" th:style="${'color: white;'}" th:text="${#dates.format(reviewsDate[date.key], 'dd-MMM-yyyy')}"></div>
                 </div>
             </td>

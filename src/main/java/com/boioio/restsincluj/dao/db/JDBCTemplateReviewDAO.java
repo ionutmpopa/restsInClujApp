@@ -43,13 +43,13 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
         String sql = "";
         Long newId = null;
         if (model.getId() > 0) {
-            sql = "update review set restaurant_id=?, date_of_review=?, date_of_visit=?, review=?, rating=?"
+            sql = "update review set restaurant_id=?, review=?, date_of_visit=?, date_of_review=?, rating=?"
                     + "where id = ? returning id";
             newId = jdbcTemplate.queryForObject(sql, new Object[]{
                     model.getRestaurant_id(),
-                    new Timestamp(model.getDateOfReview().getTime()),
-                    new Timestamp(model.getDateOfVisit().getTime()),
                     model.getReview(),
+                    new Timestamp(model.getDateOfVisit().getTime()),
+                    new Timestamp(model.getDateOfReview().getTime()),
                     model.getRating().toString(),
                     model.getId()
 
@@ -59,14 +59,14 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
                 }
             });
         } else {
-            sql = "insert into review (restaurant_id, date_of_visit, date_of_review, review, rating) "
+            sql = "insert into review (restaurant_id, review, date_of_visit, date_of_review, rating) "
                     + "values (?, ?, ?, ?, ?) returning id";
 
             newId = jdbcTemplate.queryForObject(sql, new Object[]{
                     model.getRestaurant_id(),
+                    model.getReview(),
                     new Timestamp(model.getDateOfVisit().getTime()),
                     new Timestamp(model.getDateOfReview().getTime()),
-                    model.getReview(),
                     model.getRating().toString()
             }, new RowMapper<Long>() {
                 public Long mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -108,9 +108,9 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
             Review review = new Review();
             review.setId(rs.getLong("id"));
             review.setRestaurant_id(rs.getLong("restaurant_id"));
+            review.setReview(rs.getString("review"));
             review.setDateOfVisit(new Date(rs.getTimestamp("date_of_visit").getTime()));
             review.setDateOfReview(new Date(rs.getTimestamp("date_of_review").getTime()));
-            review.setReview(rs.getString("review"));
             review.setRating(rs.getString("rating"));
             return review;
         }

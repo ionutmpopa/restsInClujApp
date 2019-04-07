@@ -63,7 +63,7 @@ public class ReviewController {
         return result;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping("/add")
     public ModelAndView add() {
         ModelAndView modelAndView = new ModelAndView("review/add");
 
