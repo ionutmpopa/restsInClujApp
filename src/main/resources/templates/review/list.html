@@ -28,7 +28,7 @@
         </button>
         <div class="navbar-collapse collapse" id="navbar10">
             <a class="navbar-brand" href="/">
-                <img src="/images/logo.png" id="logo" />
+                <img src="/images/logo.png" id="logo"/>
             </a>
 
             <ul class="navbar-nav nav-fill w-100">
@@ -71,11 +71,6 @@
     <h3>Review List</h3>
     <hr/>
 
-    <!--Button add projects-->
-    <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn btn-primary bt-sm mb-3">
-        Add Review
-    </a>
-
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
@@ -84,7 +79,7 @@
             <th>Date of visit</th>
             <th>Date of review</th>
             <th>Rating</th>
-            <th>Action</th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>
         </tr>
         </thead>
 
@@ -92,7 +87,8 @@
         <tr th:each="tempReview: ${reviews}">
             <td>
                 <div th:each="name : ${allReviews}">
-                    <div th:if="${name.key} == ${tempReview.restaurant_id}" th:style="${'color: white;'}" th:text="${allReviews[name.key]}"></div>
+                    <div th:if="${name.key} == ${tempReview.restaurant_id}" th:style="${'color: white;'}"
+                         th:text="${allReviews[name.key]}"></div>
                 </div>
             </td>
             <td th:style="${'color: white;'}" th:text="${tempReview.review}"></td>
@@ -100,16 +96,14 @@
             <td th:style="${'color: white;'}" th:text="${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></td>
             <td th:style="${'color: white;'}" th:text="${tempReview.rating}"></td>
 
-            <td>
-                <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn btn-success bt-sm mb-3">
-                    Add review
-                </a>
-
-                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/edit/{id} (id=${tempReview.id})}" class="btn btn-info bt-sm mb-3">
+            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/review/edit/{id} (id=${tempReview.id})}"
+                   class="btn btn-info bt-sm mb-3">
                     Edit
                 </a>
 
-                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/delete/{id} (id=${tempReview.id})}" class="btn btn-danger bt-sm mb-3">
+                <a th:href="@{/review/delete/{id} (id=${tempReview.id})}"
+                   class="btn btn-danger bt-sm mb-3">
                     Delete
                 </a>
             </td>

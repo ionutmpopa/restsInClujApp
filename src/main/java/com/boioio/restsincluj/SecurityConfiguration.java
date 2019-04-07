@@ -1,5 +1,6 @@
 package com.boioio.restsincluj;
 
+import com.boioio.restsincluj.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private DataSource dataSource;
 
     @Value("${spring.queries.users-query}")
@@ -37,26 +41,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.
-                jdbcAuthentication()
+
+//        CustomJdbcUserDetailsService customJdbcUserDetailsService = new CustomJdbcUserDetailsService();
+//        customJdbcUserDetailsService.set(dataSource);
+//
+//        auth.authenticationProvider(authenticationProvider());
+        auth
+                .jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
-
-
-//        auth.inMemoryAuthentication()
-//                .withUser("admin").password("admin").roles("ADMIN")
-//        .and()
-//                .withUser("user").password("user").roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+
                 .authorizeRequests()
+                .antMatchers("/register").permitAll()
                 .antMatchers("/", "/file").permitAll()
+                .antMatchers("/confirm").permitAll()
 
                // .antMatchers("/employee/delete").hasRole("ADMIN")
                 .anyRequest().authenticated()

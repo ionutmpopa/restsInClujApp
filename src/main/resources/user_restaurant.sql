@@ -78,3 +78,9 @@ insert into review
 (restaurant_id, review, date_of_visit, date_of_review, rating)
 values
 (2, 'This was a bad experience!', '2019-01-02', '2019-01-03', 'AVERAGE');
+
+ALTER TABLE app_user ADD CONSTRAINT
+email_unique UNIQUE (email);
+
+--delete from app_user;
+--truncate table user_role;

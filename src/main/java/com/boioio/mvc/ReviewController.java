@@ -52,6 +52,14 @@ public class ReviewController {
         }
         result.addObject("allReviews", allReviews);
 
+        Map<String, Date> reviewsDate = new HashMap<>();
+        for (Review review : reviews) {
+            Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
+            reviewsDate.put(review.getRestaurant_id() + "", review.getDateOfReview());
+
+        }
+        result.addObject("reviewsDate", reviewsDate);
+
         return result;
     }
 

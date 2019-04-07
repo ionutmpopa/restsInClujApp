@@ -16,9 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by sebi on 4/19/17.
- */
 @Component
 public class CommonModelInterceptor implements HandlerInterceptor {
 
@@ -34,21 +31,12 @@ public class CommonModelInterceptor implements HandlerInterceptor {
 
             List<String> roles = new LinkedList();
 
-            for (String role : roles) {
-                if (role.equalsIgnoreCase("admin")) {
-                    isAdmin = true;
-                } else {
-                    isUser = true;
-                }
-            }
             for (GrantedAuthority auth:
             authentication.getAuthorities()) {
                 roles.add(auth.getAuthority());
             }
 
             model.addObject("roles", roles);
-            model.addObject("isAdmin", isAdmin);
-            model.addObject("isUser", isUser);
         }
     }
 
