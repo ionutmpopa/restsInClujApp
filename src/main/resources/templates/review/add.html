@@ -20,6 +20,7 @@
                 return true;
             })
         });
+
     </script>
 
     <!-- Required meta tags -->
@@ -81,85 +82,82 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card bg-dark">
-                    <div class="card-header h2 text-center">
+                    <div class="card-header h2 text-center orange-border">
                         Add Review
                     </div>
                     <div class="card-body">
                         <form method="post" th:action="@{/review/save}" th:object="${review}" id="myform">
                             <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-dark">
-                                <div class="form-group">
-                                    <label for="inputGroupSelect01">Restaurant</label>
-                                    <select class="custom-select" id="inputGroupSelect01">
-                                        <option selected="">Choose...</option>
-                                        <div th:each="restaurant : ${restaurants}">
-                                            <option th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
-                                        </div>
-                                    </select>
-                                </div>
-                                <input id="restaurant_id" name="restaurant_id" type="hidden" th:field="${review.restaurant_id}"/>
-                            </li>
-                            <li class="list-group-item bg-dark">
-                                <div class="form-group">
-                                    <label for="review">Review</label>
-                                    <input th:field="*{review}" type="text" class="form-control" id="review"
-                                           placeholder="Review"/>
-                                </div>
-                            </li>
-                            <li class="list-group-item bg-dark">
-                                <div class="form-group">
-                                    <label for="dateOfVisit">Date of visit</label>
-                                    <input th:field="*{dateOfVisit}" type="text" class="form-control" id="dateOfVisit"
-                                           placeholder="Date of visit"/>
-                                </div>
-                            </li>
-                            <li class="list-group-item bg-dark">
-                                <div class="form-group">
-                                    <label for="dateOfReview">Date of review</label>
-                                    <input th:field="*{dateOfReview}" type="text" class="form-control" id="dateOfReview"
-                                           placeholder="Date of review"/>
-                                </div>
-                            </li>
-                            <li class="list-group-item bg-dark">
-                                <div class="form-group">
-                                    <label for="rating">Rating</label>
-                                    <input th:field="*{rating}" type="text" class="form-control" id="rating"
-                                           placeholder="Rating"/>
-                                </div>
-                            </li>
-                            <!--<li class="list-group-item bg-dark">-->
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="inputGroupSelect01">Restaurant</label>
+                                        <select class="custom-select" id="inputGroupSelect01">
+                                            <option selected="">Choose...</option>
+                                            <div th:each="restaurant : ${restaurants}">
+                                                <option th:value="${restaurant.id}"
+                                                        th:text="${restaurant.name}"></option>
+                                            </div>
+                                        </select>
+                                    </div>
+                                    <input id="restaurant_id" name="restaurant_id" type="hidden"
+                                           th:field="${review.restaurant_id}"/>
+                                </li>
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="review">Review</label>
+                                        <input th:field="*{review}" type="text" class="form-control" id="review"
+                                               placeholder="Review"/>
+                                    </div>
+                                </li>
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="dateOfVisit">Date of visit</label>
+                                        <input th:field="*{dateOfVisit}" type="text" class="form-control"
+                                               id="dateOfVisit"
+                                               placeholder="Date of visit"/>
+                                    </div>
+                                </li>
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="dateOfReview">Date of review</label>
+                                        <input th:field="*{dateOfReview}" type="text" class="form-control"
+                                               id="dateOfReview"
+                                               placeholder="Date of review"/>
+                                    </div>
+                                </li>
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <label for="rating">Rating</label>
+                                        <input th:field="*{rating}" type="text" class="form-control" id="rating"
+                                               placeholder="Rating"/>
+                                    </div>
+                                </li>
+                                <!--<li class="list-group-item bg-dark">-->
                                 <!--<div class="form-group">-->
-                                    <!--<label for="rating">Rating</label>-->
-                                    <!--<select class="custom-select">-->
-                                    <!--<option selected="">Choose...</option>-->
-                                        <!--<div th:each="rating : ${ratings}">-->
-                                            <!--<option th:value="${rating}" th:text="${rating}"></option>-->
-                                        <!--</div>-->
-                                    <!--</select>-->
-                                    <!--<input id ="rating" name="rating" type="hidden" th:value="${review.rating}"/>-->
+                                <!--<label for="rating">Rating</label>-->
+                                <!--<select class="custom-select">-->
+                                <!--<option selected="">Choose...</option>-->
+                                <!--<div th:each="rating : ${ratings}">-->
+                                <!--<option th:value="${rating}" th:text="${rating}"></option>-->
                                 <!--</div>-->
-                            <!--</li>-->
+                                <!--</select>-->
+                                <!--<input id ="rating" name="rating" type="hidden" th:value="${review.rating}"/>-->
+                                <!--</div>-->
+                                <!--</li>-->
 
-                            <div th:if="${review.id != null}">
-                                <input th:field="*{id}" type="hidden" id="id"/>
-                            </div>
-
-
-                            <input class="btn btn-success" type="submit" value="Save"/>
-
-                            <a href="/restaurant">
-                                <input class="btn btn-danger" type="button" value="Cancel"/>
-                            </a>
-                            </ul>
-                            <li class="list-group-item bg-dark">
-                                <div class="form-group">
-                                    <input class="btn orange-button btn-lg" type="submit" value="Save"/>
-                                    <a href="/review" class="btn btn-danger btn-lg">
-                                        Cancel
-                                    </a>
+                                <div th:if="${review.id != null}">
+                                    <input th:field="*{id}" type="hidden" id="id"/>
                                 </div>
-                            </li>
+                                <li class="list-group-item bg-dark">
+                                    <div class="form-group">
+                                        <input class="btn orange-button btn-lg" type="submit" value="Save"/>
+                                        <a href="/review" class="btn btn-danger btn-lg">
+                                            Cancel
+                                        </a>
+                                    </div>
+                                </li>
                             </ul>
+
                         </form>
                     </div>
                 </div>
