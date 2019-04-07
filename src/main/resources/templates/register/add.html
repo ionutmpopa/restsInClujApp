@@ -26,7 +26,7 @@
         </button>
         <div class="navbar-collapse collapse" id="navbar10">
             <a class="navbar-brand" href="/">
-                <img src="/images/logo.png" id="logo"/>
+                <img src="/images/logo.png" id="logo" />
             </a>
 
             <ul class="navbar-nav nav-fill w-100">
@@ -37,9 +37,6 @@
                     <a class="nav-link" href="/restaurant">Places to Eat</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/review">Reviews</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#">Most Rated</a>
                 </li>
                 <li class="nav-item">
@@ -47,7 +44,7 @@
                 </li>
                 <li class="nav-item">
                     <a
-                            href="#"
+                            href="/login"
                             class="mt-2 btn btn-lg orange-button"
                             role="button"
                     >SIGN IN</a
@@ -59,25 +56,51 @@
 </nav>
 
 <section id="body-section">
-    <div class="container ">
+    <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card bg-dark">
                     <div class="card-header h2 text-center orange-border">
-                        Log In
+                        Register Here
                     </div>
                     <div th:if="${param.error}" class="alert alert-danger text-center" role="alert">
                         Invalid username or password!
                     </div>
-                    <form th:action="@{/login}" method="post">
+                    <form th:action="@{/register/save}" th:object="${user}" method="post">
+                        <form th:action="@{/register/saverole}" th:object="${role}" method="post">
+
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input
+                                            type="firstName"
+                                            class="form-control"
+                                            id="firstName"
+                                            name="firstName"
+                                            placeholder="Enter First Name"
+                                    />
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input
+                                            type="lastName"
+                                            class="form-control"
+                                            id="lastName"
+                                            name="lastName"
+                                            placeholder="Enter Last Name"
+                                    />
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-dark">
                                 <div class="form-group ">
-                                    <label for="username">Username</label>
+                                    <label for="email">E-mail</label>
                                     <input type="text"
-                                           class="form-control" id="username"
-                                           name="username"
-                                           placeHolder="Username"/>
+                                           class="form-control" id="email"
+                                           name="email"
+                                           placeHolder="E-mail"/>
                                 </div>
                             </li>
                             <li class="list-group-item bg-dark">
@@ -87,15 +110,15 @@
                                             type="password"
                                             class="form-control"
                                             id="password"
-                                            name="password"
+                                            name = "password"
                                             placeholder="Enter Password"
                                     />
                                 </div>
                             </li>
                             <li class="list-group-item bg-dark">
                                 <div class="text-light text-center">
-                                    You don't have an account? Register
-                                    <a href="/register">
+                                    Already have an account? Log In
+                                    <a href="/login">
                         <span class="text-warning">
                           Here
                         </span>
@@ -107,6 +130,7 @@
                                 Submit
                             </button>
                         </ul>
+                    </form>
                     </form>
                 </div>
             </div>
