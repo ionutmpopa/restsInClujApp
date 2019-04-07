@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
     <title>RestInCluj</title>
 </head>
 
@@ -106,17 +106,16 @@
                                 </li>
 
                                 <div th:if="${restaurant.id != null}">
-                                    <input th:field="*{id}" type="hidden" id="id"/>
+                                    <input th:field="*{id}" type="hidden" class="form-control" id="id"
+                                           placeholder="Id"/>
                                 </div>
 
-                                <li class="list-group-item bg-dark">
-                                    <div class="form-group">
-                                        <input class="btn orange-button btn-lg" type="submit" value="Save"/>
-                                        <a href="/restaurant" class="btn btn-danger btn-lg">
-                                            Cancel
-                                        </a>
-                                    </div>
-                                </li>
+
+                                <input class="btn btn-success" type="submit" value="Save"/>
+
+                                <a href="/restaurant">
+                                    <input class="btn btn-danger" type="button" value="Cancel"/>
+                                </a>
                             </ul>
                         </form>
                     </div>
