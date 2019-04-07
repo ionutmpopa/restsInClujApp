@@ -14,8 +14,6 @@
 
             $('#inputGroupSelect01').on('change', function () {
                 selectedRestaurant = $(this).find("option:selected").val();
-
-                alert(selectedRestaurant);
             });
 
 
@@ -104,7 +102,14 @@
                                         </div>
                                     </select>
                                 </div>
-                                <input id="restaurant_id" name="restaurant_id" type="hidden" th:value="${review.restaurant_id}"/>
+                                <input id="restaurant_id" name="restaurant_id" type="hidden" th:field="${review.restaurant_id}"/>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <label for="review">Review</label>
+                                    <input th:field="*{review}" type="text" class="form-control" id="review"
+                                           placeholder="Review"/>
+                                </div>
                             </li>
                             <li class="list-group-item bg-dark">
                                 <div class="form-group">
@@ -122,13 +127,6 @@
                             </li>
                             <li class="list-group-item bg-dark">
                                 <div class="form-group">
-                                    <label for="review">Review</label>
-                                    <input th:field="*{review}" type="text" class="form-control" id="review"
-                                           placeholder="Review"/>
-                                </div>
-                            </li>
-                            <li class="list-group-item bg-dark">
-                                <div class="form-group">
                                     <label for="rating">Rating</label>
                                     <input th:field="*{rating}" type="text" class="form-control" id="rating"
                                            placeholder="Rating"/>
@@ -137,27 +135,28 @@
                             <!--<li class="list-group-item bg-dark">-->
                                 <!--<div class="form-group">-->
                                     <!--<label for="rating">Rating</label>-->
-                                    <!--<select class="custom-select" id="rating">-->
-                                        <!--<option selected="">Choose...</option>-->
+                                    <!--<select class="custom-select">-->
+                                    <!--<option selected="">Choose...</option>-->
                                         <!--<div th:each="rating : ${ratings}">-->
                                             <!--<option th:value="${rating}" th:text="${rating}"></option>-->
                                         <!--</div>-->
                                     <!--</select>-->
+                                    <!--<input id ="rating" name="rating" type="hidden" th:value="${review.rating}"/>-->
                                 <!--</div>-->
-                                <!--<input id="rating_id" name="rating_id" type="hidden" th:value="${review.rating}"/>-->
                             <!--</li>-->
 
                             <div th:if="${review.id != null}">
-                                <input th:field="*{id}" type="hidden" class="form-control" id="id"
-                                       placeholder="Id"/>
+                                <input th:field="*{id}" type="hidden" id="id"/>
                             </div>
 
-
-                            <input class="btn btn-success" type="submit" value="Save"/>
-
-                            <a href="/restaurant">
-                                <input class="btn btn-danger" type="button" value="Cancel"/>
-                            </a>
+                            <li class="list-group-item bg-dark">
+                                <div class="form-group">
+                                    <input class="btn orange-button btn-lg" type="submit" value="Save"/>
+                                    <a href="/review" class="btn btn-danger btn-lg">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </li>
                             <!--</ul>-->
                         </form>
                     </div>
