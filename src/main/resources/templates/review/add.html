@@ -4,7 +4,6 @@
 
 <head>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-
     <script>
         $(document).ready(function () {
 
@@ -23,7 +22,6 @@
                 return true;
             })
         });
-
     </script>
 
     <script type="text/javascript" src="http://code.jquery.com/jquery.mi..."></script>
@@ -168,7 +166,7 @@
                                 <!--th:field="${review.restaurant_id}"/>-->
 
                                 <div th:if="${review.id != null}">
-                                    <input th:field="*{id}" type="hidden" id="id"/>
+                                      <input th:field="*{id}" type="hidden" id="id"/>
                                 </div>
                                 <li class="list-group-item bg-dark">
                                     <div class="form-group">

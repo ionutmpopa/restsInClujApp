@@ -37,7 +37,6 @@ public class Review extends AbstractModel implements Comparable<Review> {
 //    }
 
     public String getRating() {
-        //return rating != null ? rating.toString() : null;
         return rating;
     }
 

@@ -44,11 +44,10 @@ public class ReviewController {
 
         result.addObject("reviews", reviews);
 
-        Map<String, String> allReviews = new HashMap<>();
+        Map<Long, String> allReviews = new HashMap<>();
         for (Review review : reviews) {
             Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
-            allReviews.put(review.getRestaurant_id() + "", restaurant.getName());
-
+            allReviews.put(review.getRestaurant_id(), restaurant.getName());
         }
         result.addObject("allReviews", allReviews);
         return result;
