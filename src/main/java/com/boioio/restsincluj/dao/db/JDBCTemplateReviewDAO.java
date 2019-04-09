@@ -67,7 +67,8 @@ public class JDBCTemplateReviewDAO implements ReviewDAO {
                     model.getReview(),
                     new Timestamp(model.getDateOfVisit().getTime()),
                     new Timestamp(model.getDateOfReview().getTime()),
-                    model.getRating().toString()
+                    model.getRating()
+//                    model.getRating()
             }, new RowMapper<Long>() {
                 public Long mapRow(ResultSet rs, int arg1) throws SQLException {
                     return rs.getLong(1);

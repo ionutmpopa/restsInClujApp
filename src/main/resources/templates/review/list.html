@@ -71,6 +71,10 @@
     <h3>Review List</h3>
     <hr/>
 
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/add}" class="btn btn-primary bt-sm mb-3">
+        Add Review
+    </a>
+
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>

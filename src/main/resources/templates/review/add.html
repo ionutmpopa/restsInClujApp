@@ -3,6 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -20,7 +21,6 @@
                 return true;
             })
         });
-
     </script>
 
     <!-- Required meta tags -->
@@ -125,13 +125,30 @@
                                                placeholder="Date of review"/>
                                     </div>
                                 </li>
-                                <li class="list-group-item bg-dark">
-                                    <div class="form-group">
-                                        <label for="rating">Rating</label>
-                                        <input th:field="*{rating}" type="text" class="form-control" id="rating"
-                                               placeholder="Rating"/>
-                                    </div>
-                                </li>
+                                <!--<li class="list-group-item bg-dark">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label for="rating">Rating</label>-->
+                                        <!--<input th:field="*{rating}" type="text" class="form-control" id="rating"-->
+                                               <!--placeholder="Rating"/>-->
+                                    <!--</div>-->
+                                <!--</li>-->
+
+                                <div class="form-group">
+                                    <label for="inputGroupSelect02">Rating</label>
+                                    <select class="custom-select" id="inputGroupSelect02">
+                                        <option selected="">Choose...</option>
+                                        <div th:each="rating : ${ratings}">
+                                            <option th:value="${rating}"
+                                                    th:text="${rating}">
+                                            </option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <input type="hidden" id="rating" name="rating"
+                                       th:value="${review.rating}"/>
+                                <!--<input id="restaurant_id" name="restaurant_id" type="hidden"-->
+                                       <!--th:field="${review.restaurant_id}"/>-->
+
                                 <!--<li class="list-group-item bg-dark">-->
                                 <!--<div class="form-group">-->
                                 <!--<label for="rating">Rating</label>-->
@@ -146,7 +163,7 @@
                                 <!--</li>-->
 
                                 <div th:if="${review.id != null}">
-                                    <input th:field="*{id}" type="hidden" id="id"/>
+                                      <input th:field="*{id}" type="hidden" id="id"/>
                                 </div>
                                 <li class="list-group-item bg-dark">
                                     <div class="form-group">

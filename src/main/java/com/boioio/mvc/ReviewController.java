@@ -44,10 +44,10 @@ public class ReviewController {
 
         result.addObject("reviews", reviews);
 
-        Map<String, String> allReviews = new HashMap<>();
+        Map<Long, String> allReviews = new HashMap<>();
         for (Review review : reviews) {
             Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
-            allReviews.put(restaurant.getId() + "", restaurant.getName());
+            allReviews.put(restaurant.getId(), restaurant.getName());
 
         }
         result.addObject("allReviews", allReviews);
@@ -70,12 +70,12 @@ public class ReviewController {
         Collection<Restaurant> restaurants = restaurantService.listAll();
         modelAndView.addObject("restaurants", restaurants);
 
-        List<Rating> ratings = new LinkedList<>();
-        ratings.add(Rating.valueOf("TERRIBLE"));
-        ratings.add(Rating.valueOf("POOR"));
-        ratings.add(Rating.valueOf("AVERAGE"));
-        ratings.add(Rating.valueOf("GOOD"));
-        ratings.add(Rating.valueOf("EXCELLENT"));
+        List<String> ratings = new LinkedList<>();
+        ratings.add("TERRIBLE");
+        ratings.add("POOR");
+        ratings.add("AVERAGE");
+        ratings.add("GOOD");
+        ratings.add("EXCELLENT");
 
         modelAndView.addObject("ratings", ratings);
 

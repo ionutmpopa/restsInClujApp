@@ -17,7 +17,7 @@ public class Review extends AbstractModel {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateOfReview;
 
-    private Rating rating;
+    private String rating;
 
 
     public void setRestaurant_id(long restaurant_id) {
@@ -37,11 +37,12 @@ public class Review extends AbstractModel {
 //    }
 
     public String getRating() {
-        return rating != null ? rating.toString() : null;
+//        return rating != null ? rating.toString() : "POOR";
+        return rating;
     }
 
     public void setRating(String rating) {
-        this.rating = Rating.valueOf(rating);
+        this.rating = rating;
     }
 
     public String getReview() {
