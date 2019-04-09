@@ -50,11 +50,6 @@ public class ReviewService {
         return false;
     }
 
-//    public Review get(Long id) {
-//        LOGGER.debug("Getting review for id: " + id);
-//        return reviewDAO.findById(id);
-//    }
-
     public Review findById(long id) {
         return reviewDAO.findById(id);
     }
@@ -72,11 +67,11 @@ public class ReviewService {
         if (review.getDateOfReview() == null) {
             errors.add("Date of review is Empty");
         }
-//        else {
-//            if(currentDate.before((review.getDateOfReview()))){
-//                errors.add("Date of review in future");
-//            }
-//        }
+        else {
+            if(currentDate.before((review.getDateOfReview()))){
+                errors.add("Date of review in future");
+            }
+        }
         if(review.getDateOfVisit() == null){
             errors.add("Date of visit is Empty") ;
         }
@@ -84,11 +79,11 @@ public class ReviewService {
         if (StringUtils.isEmpty(review.getReview())) {
             errors.add("Review is Empty");
         }
-//        else {
-//            if (currentDate.before((review.getDateOfVisit()))) {
-//                errors.add("Date of visit in future");
-//            }
-//        }
+        else {
+            if (currentDate.before((review.getDateOfVisit()))) {
+                errors.add("Date of visit in future");
+            }
+        }
 
         if (!errors.isEmpty()) {
             throw new ValidationException(errors.toArray(new String[] {}));

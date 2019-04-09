@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class Review extends AbstractModel {
+public class Review extends AbstractModel implements Comparable<Review> {
 
     private long restaurant_id;
 
@@ -17,7 +17,7 @@ public class Review extends AbstractModel {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateOfReview;
 
-    private Rating rating;
+    private String rating;
 
 
     public void setRestaurant_id(long restaurant_id) {
@@ -37,11 +37,12 @@ public class Review extends AbstractModel {
 //    }
 
     public String getRating() {
-        return rating != null ? rating.toString() : null;
+        //return rating != null ? rating.toString() : null;
+        return rating;
     }
 
     public void setRating(String rating) {
-        this.rating = Rating.valueOf(rating);
+        this.rating = rating;
     }
 
     public String getReview() {
@@ -95,5 +96,20 @@ public class Review extends AbstractModel {
     public int hashCode() {
 
         return Objects.hash(restaurant_id, review, dateOfVisit, dateOfReview, rating);
+    }
+
+    @Override
+    public int compareTo(Review o) {
+
+        long comparing = this.getRestaurant_id() - o.getRestaurant_id();
+        int comparingToInt = Math.toIntExact(comparing);
+
+        if (comparingToInt > 0) {
+            return 1;
+        } else if (comparingToInt < 0) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

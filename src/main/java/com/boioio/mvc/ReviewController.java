@@ -1,6 +1,5 @@
 package com.boioio.mvc;
 
-import com.boioio.restsincluj.domain.Rating;
 import com.boioio.restsincluj.domain.Restaurant;
 import com.boioio.restsincluj.domain.Review;
 import com.boioio.restsincluj.exception.ValidationException;
@@ -38,28 +37,20 @@ public class ReviewController {
         ModelAndView result = new ModelAndView("review/list");
 
 
-        Collection<Review> reviews = reviewService.listAll();
+        Collection<Review> myCollection = reviewService.listAll();
         Collection<Restaurant> restaurants = restaurantService.listAll();
-
+        List<Review> reviews = new LinkedList<>(myCollection);
+        Collections.sort(reviews);
 
         result.addObject("reviews", reviews);
 
         Map<String, String> allReviews = new HashMap<>();
         for (Review review : reviews) {
             Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
-            allReviews.put(restaurant.getId() + "", restaurant.getName());
+            allReviews.put(review.getRestaurant_id() + "", restaurant.getName());
 
         }
         result.addObject("allReviews", allReviews);
-
-        Map<String, Date> reviewsDate = new HashMap<>();
-        for (Review review : reviews) {
-            Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
-            reviewsDate.put(review.getRestaurant_id() + "", review.getDateOfReview());
-
-        }
-        result.addObject("reviewsDate", reviewsDate);
-
         return result;
     }
 
@@ -70,13 +61,12 @@ public class ReviewController {
         Collection<Restaurant> restaurants = restaurantService.listAll();
         modelAndView.addObject("restaurants", restaurants);
 
-        List<Rating> ratings = new LinkedList<>();
-        ratings.add(Rating.valueOf("TERRIBLE"));
-        ratings.add(Rating.valueOf("POOR"));
-        ratings.add(Rating.valueOf("AVERAGE"));
-        ratings.add(Rating.valueOf("GOOD"));
-        ratings.add(Rating.valueOf("EXCELLENT"));
-
+        List<String> ratings = new LinkedList<>();
+        ratings.add("TERRIBLE");
+        ratings.add("POOR");
+        ratings.add("AVERAGE");
+        ratings.add("GOOD");
+        ratings.add("EXCELLENT");
         modelAndView.addObject("ratings", ratings);
 
         modelAndView.addObject("review", new Review());
@@ -132,6 +122,36 @@ public class ReviewController {
         }
 
         return modelAndView;
+    }
+
+    @RequestMapping("/rated")
+    public ModelAndView showMostRated() {
+        ModelAndView result = new ModelAndView("review/mostrated");
+
+
+        Collection<Review> myCollection = reviewService.listAll();
+        Collection<Restaurant> restaurants = restaurantService.listAll();
+        List<Review> reviews = new LinkedList<>(myCollection);
+        Collections.sort(reviews);
+
+//        Map<String, List<Review>> myReviewMap = new HashMap<>();
+//
+//        for (Review revs : reviews) {
+//
+//            myReviewMap.put(revs.get)
+//
+//        }
+
+        result.addObject("reviews", reviews);
+
+        Map<String, String> allReviews = new HashMap<>();
+        for (Review review : reviews) {
+            Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
+            allReviews.put(review.getRestaurant_id() + "", restaurant.getName());
+
+        }
+        result.addObject("allReviews", allReviews);
+        return result;
     }
 
 }

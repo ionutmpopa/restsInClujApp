@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Objects;
 
-public class Restaurant extends AbstractModel {
+public class Restaurant extends AbstractModel implements Comparable<Restaurant> {
 
     @NotEmpty(message = "{name.notempty}")
     private String name;
@@ -85,5 +85,10 @@ public class Restaurant extends AbstractModel {
     public int hashCode() {
 
         return Objects.hash(name, address, capacity, description, restType);
+    }
+
+    @Override
+    public int compareTo(Restaurant o) {
+        return this.getRestType().toString().compareTo(o.getRestType().toString());
     }
 }

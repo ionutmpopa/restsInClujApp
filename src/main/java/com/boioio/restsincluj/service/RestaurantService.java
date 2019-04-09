@@ -2,7 +2,6 @@ package com.boioio.restsincluj.service;
 
 import com.boioio.restsincluj.dao.RestaurantDAO;
 import com.boioio.restsincluj.domain.Restaurant;
-import com.boioio.restsincluj.domain.Review;
 import com.boioio.restsincluj.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,24 +82,6 @@ public class RestaurantService {
     public Restaurant get(Long id) {
         LOGGER.debug("Getting employee for id: " + id);
         return restaurantDAO.findById(id);
-    }
-
-    public String listRestaurantAndReview(long restId) {
-
-        Collection<Review> reviews = reviewService.listAll();
-        Collection<Restaurant> restaurants = restaurantDAO.getAll();
-
-        long sum = 0;
-        long result = 0;
-
-        for(Review review: reviews) {
-
-            if(review.getRestaurant_id() == restId) {
-
-                return review.getReview();
-            }
-        }
-        return null;
     }
 
 }

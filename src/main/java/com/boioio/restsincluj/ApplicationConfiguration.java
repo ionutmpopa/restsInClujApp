@@ -23,35 +23,6 @@ public class ApplicationConfiguration {
 	@Value("${db.name}")
 	private String dbName;
 
-	/*@Bean
-	public EmployeeService employeeService() {
-		EmployeeService ems = new EmployeeService();
-		
-		ems.setDao(employeeDAO());
-		return ems;
-	}*/
-	
-	/*@Bean
-	public EmployeeDAO employeeDAO() {
-		return new IMEmployeeDAO();
-	}
-
-*/
-
-/*		@Bean
-   public EmployeeDAO employeeDAO() {
-		return new JDBCEmployeeDAO(dbHost,
-				"5432",
-				dbName,
-				dbUser ,
-				dbPassword);
-   }*/
-
-/*	@Bean
-	public EmployeeDAO employeeDAO() {
-		return new JdbcTemplateEmployeeDAO(dataSource());
-	}*/
-
 	@Bean
 	public DataSource dataSource() {
 		String url = new StringBuilder()

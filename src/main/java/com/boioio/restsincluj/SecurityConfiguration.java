@@ -14,9 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
 
-/**
- * Created by sebi on 4/19/17.
- */
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
@@ -42,10 +40,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
 
-//        CustomJdbcUserDetailsService customJdbcUserDetailsService = new CustomJdbcUserDetailsService();
-//        customJdbcUserDetailsService.set(dataSource);
-//
-//        auth.authenticationProvider(authenticationProvider());
         auth
                 .jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
@@ -64,8 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/file").permitAll()
                 .antMatchers("/confirm").permitAll()
 
-               // .antMatchers("/employee/delete").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
 
                 .and()
                 .csrf().disable()

@@ -3,6 +3,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
     <script>
         $(document).ready(function () {
 
@@ -10,6 +12,7 @@
 
             $('#inputGroupSelect01').on('change', function () {
                 selectedRestaurant = $(this).find("option:selected").val();
+                alert(selectedRestaurant);
             });
 
 
@@ -22,6 +25,23 @@
         });
 
     </script>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery.mi..."></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+        $("select.country").change(function(){
+
+        var selectedCountry = $(".country option:selected").val();
+
+        alert("You have selected the country - " + selectedCountry);
+
+        });
+
+        });
+</script>
 
     <!-- Required meta tags -->
     <meta charset="utf-8"/>
@@ -94,13 +114,11 @@
                                         <select class="custom-select" id="inputGroupSelect01">
                                             <option selected="">Choose...</option>
                                             <div th:each="restaurant : ${restaurants}">
-                                                <option th:value="${restaurant.id}"
-                                                        th:text="${restaurant.name}"></option>
+                                                <option th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
                                             </div>
                                         </select>
                                     </div>
-                                    <input id="restaurant_id" name="restaurant_id" type="hidden"
-                                           th:field="${review.restaurant_id}"/>
+                                    <input id="restaurant_id" name="restaurant_id" type="hidden" th:value="${review.restaurant_id}"/>
                                 </li>
                                 <li class="list-group-item bg-dark">
                                     <div class="form-group">
@@ -125,25 +143,29 @@
                                                placeholder="Date of review"/>
                                     </div>
                                 </li>
-                                <li class="list-group-item bg-dark">
-                                    <div class="form-group">
-                                        <label for="rating">Rating</label>
-                                        <input th:field="*{rating}" type="text" class="form-control" id="rating"
-                                               placeholder="Rating"/>
-                                    </div>
-                                </li>
                                 <!--<li class="list-group-item bg-dark">-->
                                 <!--<div class="form-group">-->
                                 <!--<label for="rating">Rating</label>-->
-                                <!--<select class="custom-select">-->
-                                <!--<option selected="">Choose...</option>-->
-                                <!--<div th:each="rating : ${ratings}">-->
-                                <!--<option th:value="${rating}" th:text="${rating}"></option>-->
-                                <!--</div>-->
-                                <!--</select>-->
-                                <!--<input id ="rating" name="rating" type="hidden" th:value="${review.rating}"/>-->
+                                <!--<input th:field="*{rating}" type="text" class="form-control" id="rating"-->
+                                <!--placeholder="Rating"/>-->
                                 <!--</div>-->
                                 <!--</li>-->
+
+                                <div class="form-group">
+                                    <label for="inputGroupSelect02">Rating</label>
+                                    <select class="custom-select" id="inputGroupSelect02">
+                                        <option selected="">Choose...</option>
+                                        <div th:each="rating : ${ratings}">
+                                            <option th:value="${rating}"
+                                                    th:text="${rating}">
+                                            </option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <input type="hidden" id="rating" name="rating"
+                                       th:value="${review.rating}"/>
+                                <!--<input id="restaurant_id" name="restaurant_id" type="hidden"-->
+                                <!--th:field="${review.restaurant_id}"/>-->
 
                                 <div th:if="${review.id != null}">
                                     <input th:field="*{id}" type="hidden" id="id"/>

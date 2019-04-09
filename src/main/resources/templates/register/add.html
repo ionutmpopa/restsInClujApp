@@ -60,11 +60,13 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card bg-dark">
+                    <div th:if="${param.success}">
+                        <div class="alert alert-info">
+                            You've successfully registered to our awesome app!
+                        </div>
+                    </div>
                     <div class="card-header h2 text-center orange-border">
                         Register Here
-                    </div>
-                    <div th:if="${param.error}" class="alert alert-danger text-center" role="alert">
-                        Invalid username or password!
                     </div>
                     <form th:action="@{/register/save}" th:object="${user}" method="post">
                         <form th:action="@{/register/saverole}" th:object="${role}" method="post">

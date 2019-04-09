@@ -36,15 +36,19 @@ public class RestaurantController {
     public ModelAndView listAll() {
         ModelAndView result = new ModelAndView("restaurant/list");
 
-        Collection<Restaurant> restaurants = restaurantService.listAll();
+        Collection<Restaurant> myRestaurants = restaurantService.listAll();
         Collection<Review> reviews = reviewService.listAll();
+        List<Restaurant> restaurants = new LinkedList<>(myRestaurants);
+        Collections.sort(restaurants);
 
         result.addObject("restaurants", restaurants);
 
         Map<String, String> allReviews = new HashMap<>();
         for (Review review : reviews) {
             Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
-            allReviews.put(review.getRestaurant_id() + "", review.getReview());
+            if (restaurant.getId() == review.getRestaurant_id()) {
+                allReviews.put(restaurant.getId() + "", review.getReview());
+            }
 
         }
         result.addObject("allReviews", allReviews);
@@ -52,7 +56,9 @@ public class RestaurantController {
         Map<String, Date> reviewsDate = new HashMap<>();
         for (Review review : reviews) {
             Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
-            reviewsDate.put(review.getRestaurant_id() + "", review.getDateOfReview());
+            if (restaurant.getId() == review.getRestaurant_id()) {
+                reviewsDate.put(restaurant.getId() + "", review.getDateOfReview());
+            }
 
         }
         result.addObject("reviewsDate", reviewsDate);
@@ -115,28 +121,5 @@ public class RestaurantController {
         }
 
         return modelAndView;
-    }
-
-    @RequestMapping(value = "/reviewlist{id}", method = RequestMethod.GET)
-    public ModelAndView reviewlist(@PathVariable("id") long id) {
-        ModelAndView result = new ModelAndView("restaurant/reviewlist");
-
-        Collection<Restaurant> restaurants = restaurantService.listAll();
-        Collection<Review> reviews = reviewService.listAll();
-
-        result.addObject("restaurants", restaurants);
-
-        Map<String, String> allListReviews = new HashMap<>();
-        for (Review review : reviews) {
-
-            if (review.getRestaurant_id() == id) {
-
-                Restaurant restaurant = restaurantService.get(review.getRestaurant_id());
-                allListReviews.put(review.getRestaurant_id() + "", review.getReview());
-            }
-        }
-        result.addObject("allListReviews", allListReviews);
-
-        return result;
     }
 }

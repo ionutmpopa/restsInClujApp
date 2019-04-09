@@ -88,28 +88,6 @@ public class JdbcTemplateUserDAO implements UserDAO {
         return model;
     }
 
-//    @Override
-//    public Role updateRole(Role model) {
-//        String sql = "";
-//        Long newId = null;
-//
-//        User user_id = findById(model.getUser_id());
-//
-//        sql = "insert into user_role (user_id,role_id) "
-//                + "values (?,?) returning id";
-//
-//        newId = jdbcTemplate.queryForObject(sql, new Object[]{
-//                model.getUser_id(),
-//                2
-//        }, new RowMapper<Long>() {
-//            public Long mapRow(ResultSet rs, int arg1) throws SQLException {
-//                return rs.getLong(1);
-//            }
-//        });
-//        model.setId(newId);
-//        return model;
-//    }
-
     @Override
     public Collection<User> searchByName(String query) {
         return null;

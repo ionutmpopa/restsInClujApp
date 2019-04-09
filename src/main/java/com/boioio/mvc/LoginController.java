@@ -21,28 +21,4 @@ public class LoginController {
 
 		return modelAndView;
 	}
-	
-	
-//	@RequestMapping("/onLogin")
-//	public ModelAndView onLogin(String username, String pass,
-//			HttpServletRequest request) {
-//		ModelAndView modelAndView = new ModelAndView();
-//		///use UserService to check the login
-//		boolean loginWithSuccess =  true;
-//		if (loginWithSuccess) {
-//			ro.sci.ems.domain.User user = new ro.sci.ems.domain.User();
-//			user.setUserName(userName);
-//
-//			request.getSession().setAttribute("currentUser", user);
-//			modelAndView.setView(new RedirectView("/employee"));
-//		}
-//
-//		return modelAndView;
-//	}
-//
-//	@RequestMapping("/logout")
-//	public String onLogout(HttpServletRequest request) {
-//		request.getSession().invalidate();
-//		return "/";
-//	}
 }
