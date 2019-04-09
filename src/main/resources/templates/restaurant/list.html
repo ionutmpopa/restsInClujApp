@@ -2,15 +2,13 @@
 <html lang="en" xmlns:th="http://wwww.thymeleaf.org"
       xmlns:sec="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
     <link rel="stylesheet" href="css/style.css"/>
-    <!--<link rel="stylesheet" th:href="@{../static/style.css}" />-->
 
     <title>RestInCluj</title>
 </head>
@@ -59,72 +57,50 @@
                             role="button"
                     >LOG OUT</a>
                 </li>
-                <!--<li class="nav-item">-->
-                <!---->
-                <!--</li>-->
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container mt-5">
-    <h3>Restaurant List</h3>
-    <hr/>
+    <h1 class="text-center">Restaurant List</h1>
+    <div class="text-center my-2">
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/restaurant/add}" class="btn orange-button bt-sm">
+            Add Restaurant
+        </a>
+    </div>
 
-    <!--Button add projects-->
-    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/restaurant/add}" class="btn btn-primary bt-sm mb-3">
-        Add Restaurant
-    </a>
-
-    <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-        <tr>
-            <th>Restaurant Name</th>
-            <th>Restaurant Address</th>
-            <th>Capacity</th>
-            <th>Restaurant Type</th>
-            <th>Description</th>
-            <th>Last Review</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="tempRestaurant: ${restaurants}">
-            <td th:style="${'color: white;'}" th:text="${tempRestaurant.name}">
-            </td>
-            <td th:style="${'color: white;'}" th:text="${tempRestaurant.address}"></td>
-            <td th:style="${'color: white;'}" th:text="${tempRestaurant.capacity}"></td>
-            <td th:style="${'color: white;'}" th:text="${tempRestaurant.restType}"></td>
-            <td th:style="${'color: white;'}" th:text="${tempRestaurant.description}"></td>
-            <td th:style="${'color: white;'}">
-                <div th:each="name : ${allReviews}">
-                    <div th:if="${name.key} == ${tempRestaurant.id}" th:style="${'color: white;'}" th:text="${allReviews[name.key]}"></div>
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card bg-dark mb-2" th:each="tempRestaurant: ${restaurants}">
+                <div class="ml-auto px-1">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/restaurant/edit/{id} (id=${tempRestaurant.id})}">
+                        <i class="fas fa-pen px-1 text-muted"></i>
+                    </a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/restaurant/delete/{id} (id=${tempRestaurant.id})}">
+                        <i class="fas fa-times-circle px-1 text-muted"></i>
+                    </a>
                 </div>
-                <div th:each="date : ${reviewsDate}">
-                    <div th:if="${date.key} == ${tempRestaurant.id}" th:style="${'color: white;'}" th:text="${#dates.format(reviewsDate[date.key], 'dd-MMM-yyyy')}"></div>
+                <div class="card-body text-center">
+                    <h4 class="card-title" th:text="${tempRestaurant.name}"></h4>
+                    <h6 class="card-subtitle text-muted orange-border p-2" th:text="${tempRestaurant.restType}"></h6>
+
+                    <!--<p class="lead" th:text="${tempRestaurant.description}">-->
+                    <p class="lead p-2 orange-border" th:text="${tempRestaurant.description}">
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card-subtitle text-muted p-2" th:text="'Address: ' + ${tempRestaurant.address}"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-subtitle text-muted p-2" th:text="'Capacity: ' + ${tempRestaurant.capacity}"></div>
+                        </div>
+                    </div>
                 </div>
-            </td>
-            <td>
-
-                <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn btn-success bt-sm mb-3">
-                    Add review
-                </a>
-                <a sec:authorize="isAuthenticated()" th:href="@{/review}" class="btn btn-info bt-sm mb-3">
-                    Reviews
-                </a>
-
-                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/restaurant/edit/{id} (id=${tempRestaurant.id})}" class="btn btn-info bt-sm mb-3">
-                    Edit
-                </a>
-
-                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/restaurant/delete/{id} (id=${tempRestaurant.id})}" class="btn btn-danger bt-sm mb-3">
-                    Delete
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->
