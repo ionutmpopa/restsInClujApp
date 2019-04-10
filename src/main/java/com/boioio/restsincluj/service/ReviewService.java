@@ -75,14 +75,28 @@ public class ReviewService {
         if(review.getDateOfVisit() == null){
             errors.add("Date of visit is Empty") ;
         }
-
-        if (StringUtils.isEmpty(review.getReview())) {
-            errors.add("Review is Empty");
-        }
         else {
             if (currentDate.before((review.getDateOfVisit()))) {
                 errors.add("Date of visit in future");
             }
+        }
+
+        if (StringUtils.isEmpty(review.getReview())) {
+            errors.add("Review is Empty");
+        }
+
+        if(review.getRestaurant_id() <= 0){
+            errors.add("Restaurant not selected");
+        }
+
+        if(review.getDateOfVisit() != null && review.getDateOfReview() != null){
+            if(review.getDateOfReview().before(review.getDateOfVisit())){
+                errors.add("Review date is before visit date");
+            }
+        }
+
+        if(review.getRating() == null){
+            errors.add("Rating not provided");
         }
 
         if (!errors.isEmpty()) {

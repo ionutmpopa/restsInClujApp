@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<bean id="imDAO" class="ro.sci.ems.dao.inmemory.IMEmployeeDAO"/>
+	<bean id="reviewService" class="com.boioio.restsincluj.service.ReviewService">
+
+	    <property name="dao" ref="imDAO" />
+	</bean>
+	<bean id="restaurantService" class="com.boioio.restsincluj.service.RestaurantService">
+	</bean>
+
+</beans>

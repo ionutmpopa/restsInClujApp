@@ -74,9 +74,19 @@ public class RestaurantService {
         if (restaurant.getRestType() == null) {
             errors.add("Type is Empty");
         }
+
+        if(restaurant.getCapacity() <= 0){
+            errors.add("Capacity not ok");
+        }
+
+        if(StringUtils.isEmpty(restaurant.getDescription())){
+            errors.add("Restaurant description missing");
+        }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors.toArray(new String[] {}));
         }
+
     }
 
     public Restaurant get(Long id) {
