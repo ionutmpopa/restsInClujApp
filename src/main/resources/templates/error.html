@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <title>RestInCluj</title>
+</head>
+
+<body id="bg-grad">
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbar10"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar10">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" id="logo" />
+            </a>
+
+            <ul class="navbar-nav nav-fill w-100">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/restaurant">Places to Eat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/review">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a
+                            sec:authorize="!isAuthenticated()" href="/login"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >SIGN IN</a>
+                    <a
+                            sec:authorize="isAuthenticated()" href="/logout"
+                            class="mt-2 btn btn-lg orange-button"
+                            role="button"
+                    >LOG OUT</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section id="body-section">
+    <div class="container ">
+        <div class="row">
+            <h1>Something went wrong ... sorry.</h1>
+            <div th:if="applicationError != null">
+                <div class="text-muted" th:text="${applicationError.getCode()}"></div>
+                <div class="text-muted" th:text="${applicationError.getMessage()}"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
