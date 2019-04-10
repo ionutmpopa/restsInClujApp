@@ -145,21 +145,22 @@
                                 </div>
                                 </li>
 
+                                <!--DROPDOWN MENU - DOESN'T WORK-->
+                                <!--<li class="list-group-item bg-dark">-->
                                 <!--<div class="form-group">-->
                                     <!--<label for="inputGroupSelect02">Rating</label>-->
                                     <!--<select class="custom-select" id="inputGroupSelect02">-->
                                         <!--<option selected="">Choose...</option>-->
-                                        <!--<div th:each="rating : ${ratings}">-->
-                                            <!--<option th:value="${rating}"-->
-                                                    <!--th:text="${rating}">-->
+                                        <!--<div th:each="myRating : ${ratings}">-->
+                                            <!--<option th:value="${myRating}"-->
+                                                    <!--th:text="${myRating}">-->
                                             <!--</option>-->
                                         <!--</div>-->
                                     <!--</select>-->
                                 <!--</div>-->
-                                <!--<input type="hidden" id="rating" name="rating"-->
+                                <!--<input id="rating" name="rating" type="hidden"-->
                                        <!--th:value="${review.rating}"/>-->
-                                <!--<input id="restaurant_id" name="restaurant_id" type="hidden"-->
-                                <!--th:field="${review.restaurant_id}"/>-->
+                                <!--</li>-->
 
                                 <div th:if="${review.id != null}">
                                       <input th:field="*{id}" type="hidden" id="id"/>
