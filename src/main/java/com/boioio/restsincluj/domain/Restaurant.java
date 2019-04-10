@@ -11,7 +11,7 @@ public class Restaurant extends AbstractModel implements Comparable<Restaurant> 
 
     private String address;
 
-    private double capacity;
+    private int capacity;
 
     private String description;
 
@@ -42,11 +42,11 @@ public class Restaurant extends AbstractModel implements Comparable<Restaurant> 
         this.address = address;
     }
 
-    public double getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
@@ -74,7 +74,7 @@ public class Restaurant extends AbstractModel implements Comparable<Restaurant> 
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Restaurant that = (Restaurant) o;
-        return Double.compare(that.capacity, capacity) == 0 &&
+        return Integer.compare(that.capacity, capacity) == 0 &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(address, that.address) &&
                 Objects.equals(description, that.description) &&

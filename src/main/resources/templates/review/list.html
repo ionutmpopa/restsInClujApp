@@ -63,7 +63,7 @@
 <div class="container mt-5">
     <h1>Review List</h1>
     <div class="my-2">
-        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/add}" class="btn orange-button bt-sm my-2">
+        <a sec:authorize="isAuthenticated()" th:href="@{/review/add}" class="btn orange-button bt-sm my-2">
             Add Review
         </a>
     </div>
@@ -118,10 +118,10 @@
             </a>
         </div>
         <div class="card-header orange-border">
-            <div th:each="name : ${allReviews}">
+            <span th:each="name : ${allReviews}">
                 <span th:if="${name.key} == ${tempReview.restaurant_id}" th:text="${allReviews[name.key]}"></span>
-                <span class="text-muted float-right" th:text="'Reviewed ' + ${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></span>
-            </div>
+            </span>
+            <span class="text-muted float-right" th:text="'Reviewed ' + ${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></span>
         </div>
         <div class="card-body">
             <blockquote class="blockquote mb-0">
