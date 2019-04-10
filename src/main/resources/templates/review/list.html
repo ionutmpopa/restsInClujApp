@@ -6,11 +6,10 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
     <link rel="stylesheet" href="css/style.css"/>
-    <!--<link rel="stylesheet" th:href="@{../static/style.css}" />-->
 
     <title>RestInCluj</title>
 </head>
@@ -56,61 +55,81 @@
                             role="button"
                     >LOG OUT</a>
                 </li>
-                <!--<li class="nav-item">-->
-                <!---->
-                <!--</li>-->
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container mt-5">
-    <h3>Review List</h3>
-    <hr/>
+    <h1>Review List</h1>
+    <div class="my-2">
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/add}" class="btn orange-button bt-sm my-2">
+            Add Review
+        </a>
+    </div>
 
-    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/add}" class="btn btn-primary bt-sm mb-3">
-        Add Review
-    </a>
+    <!--<table class="table table-bordered table-striped">-->
+        <!--<thead class="thead-dark">-->
+        <!--<tr>-->
+            <!--<th>Restaurant Name</th>-->
+            <!--<th>Review</th>-->
+            <!--<th>Date of visit</th>-->
+            <!--<th>Date of review</th>-->
+            <!--<th>Rating</th>-->
+            <!--<th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
 
-    <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-        <tr>
-            <th>Restaurant Name</th>
-            <th>Review</th>
-            <th>Date of visit</th>
-            <th>Date of review</th>
-            <th>Rating</th>
-            <th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>
-        </tr>
-        </thead>
+        <!--<tbody>-->
+        <!--<tr th:each="tempReview: ${reviews}">-->
+            <!--<td>-->
+                <!--<div th:each="name : ${allReviews}">-->
+                    <!--<div th:if="${name.key} == ${tempReview.restaurant_id}" th:style="${'color: white;'}"-->
+                         <!--th:text="${allReviews[name.key]}"></div>-->
+                <!--</div>-->
+            <!--</td>-->
+            <!--<td th:style="${'color: white;'}" th:text="${tempReview.review}"></td>-->
+            <!--<td th:style="${'color: white;'}" th:text="${#dates.format(tempReview.dateOfVisit, 'dd-MMM-yyyy')}"></td>-->
+            <!--<td th:style="${'color: white;'}" th:text="${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></td>-->
+            <!--<td th:style="${'color: white;'}" th:text="${tempReview.rating}"></td>-->
 
-        <tbody>
-        <tr th:each="tempReview: ${reviews}">
-            <td>
-                <div th:each="name : ${allReviews}">
-                    <div th:if="${name.key} == ${tempReview.restaurant_id}" th:style="${'color: white;'}"
-                         th:text="${allReviews[name.key]}"></div>
-                </div>
-            </td>
-            <td th:style="${'color: white;'}" th:text="${tempReview.review}"></td>
-            <td th:style="${'color: white;'}" th:text="${#dates.format(tempReview.dateOfVisit, 'dd-MMM-yyyy')}"></td>
-            <td th:style="${'color: white;'}" th:text="${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></td>
-            <td th:style="${'color: white;'}" th:text="${tempReview.rating}"></td>
+            <!--<td sec:authorize="hasRole('ROLE_ADMIN')">-->
+                <!--<a th:href="@{/review/edit/{id} (id=${tempReview.id})}"-->
+                   <!--class="btn btn-info bt-sm mb-3">-->
+                    <!--Edit-->
+                <!--</a>-->
 
-            <td sec:authorize="hasRole('ROLE_ADMIN')">
-                <a th:href="@{/review/edit/{id} (id=${tempReview.id})}"
-                   class="btn btn-info bt-sm mb-3">
-                    Edit
-                </a>
+                <!--<a th:href="@{/review/delete/{id} (id=${tempReview.id})}"-->
+                   <!--class="btn btn-danger bt-sm mb-3">-->
+                    <!--Delete-->
+                <!--</a>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
 
-                <a th:href="@{/review/delete/{id} (id=${tempReview.id})}"
-                   class="btn btn-danger bt-sm mb-3">
-                    Delete
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="card bg-dark mb-2 border-warning" th:each="tempReview: ${reviews}">
+        <div class="ml-auto px-1 ">
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/edit/{id} (id=${tempReview.id})}">
+                <i class="fas fa-pen px-1 text-muted"></i>
+            </a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/review/delete/{id} (id=${tempReview.id})}">
+                <i class="fas fa-times-circle px-1 text-muted"></i>
+            </a>
+        </div>
+        <div class="card-header orange-border">
+            <div th:each="name : ${allReviews}">
+                <span th:if="${name.key} == ${tempReview.restaurant_id}" th:text="${allReviews[name.key]}"></span>
+                <span class="text-muted float-right" th:text="'Reviewed ' + ${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></span>
+            </div>
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <p th:text="${tempReview.review}"></p>
+                <footer class="blockquote-footer"    th:text="${#dates.format(tempReview.dateOfReview, 'dd-MMM-yyyy')}"></footer>
+            </blockquote>
+        </div>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->
