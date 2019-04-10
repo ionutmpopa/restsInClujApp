@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 
 import static org.mockito.Mockito.when;
@@ -74,6 +75,12 @@ public class ReviewServiceTestWithConfigurationAndMocking extends BaseReviewServ
 		Assert.assertEquals(0, getReviewService().search("EXCELENT").size());
 
 	}
+
+	@Test
+    public void test_empty_get_all() throws ValidationException{
+        Collection<Review> reviews = getReviewService().listAll();
+        Assert.assertTrue(reviews.isEmpty());
+    }
 
 //	@Test
 //	public void test_search_by_rating_multiple_results() throws ValidationException {

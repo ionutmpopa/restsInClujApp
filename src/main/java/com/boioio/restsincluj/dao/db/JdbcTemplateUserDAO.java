@@ -89,9 +89,7 @@ public class JdbcTemplateUserDAO implements UserDAO {
     }
 
     @Override
-    public Collection<User> searchByName(String query) {
-        return null;
-    }
+    public Collection<User> searchByName(String query) { return null; }
 
 
     private static class UserMapper implements RowMapper<User> {
@@ -117,6 +115,7 @@ public class JdbcTemplateUserDAO implements UserDAO {
             role.setId(rs.getLong("id"));
             role.setUser_id(rs.getLong("user_id"));
             role.setRole_id(rs.getLong("role_id"));
+            role.setId(rs.getLong("id"));
             return role;
         }
     }

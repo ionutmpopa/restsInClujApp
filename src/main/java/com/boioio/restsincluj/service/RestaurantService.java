@@ -37,6 +37,10 @@ public class RestaurantService {
         return restaurantDAO.getAll();
     }
 
+    public Collection<Restaurant> searchByName( String query) {
+        LOGGER.debug("Searching for " + query);
+        return restaurantDAO.searchByName(query);
+    }
 
     public boolean delete(Long id) {
         LOGGER.debug("Deleting restaurant with id: " + id);

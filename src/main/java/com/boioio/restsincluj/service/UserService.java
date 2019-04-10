@@ -63,6 +63,15 @@ public class UserService {
     private void validate(User user) throws ValidationException {
         Date currentDate = new Date();
         List<String> errors = new LinkedList<String>();
+
+        if(StringUtils.isEmpty(user.getEmail())){
+            errors.add("Email required");
+        }
+
+        if(StringUtils.isEmpty(user.getPassword())){
+            errors.add("Password required");
+        }
+
         if (StringUtils.isEmpty(user.getFirstName())) {
             errors.add("First Name is Empty");
         }
@@ -72,14 +81,21 @@ public class UserService {
         }
 
         if (user.getEmail() == null) {
-            errors.add("Gender is Empty");
+            errors.add("Email is Empty");
+        }
+        if(user.getPassword() == null) {
+            errors.add("Password Missing");
+        }
+        if(user.getEnabled() == false){
+            errors.add("Account should be enabled");
+        }
 
 
             if (!errors.isEmpty()) {
                 throw new ValidationException(errors.toArray(new String[]{}));
             }
         }
-    }
+
 
     public UserDAO getDao() {
         return userDAO;
