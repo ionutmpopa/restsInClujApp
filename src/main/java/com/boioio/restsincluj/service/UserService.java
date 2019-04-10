@@ -86,9 +86,6 @@ public class UserService {
         if(user.getPassword() == null) {
             errors.add("Password Missing");
         }
-        if(user.getEnabled() == false){
-            errors.add("Account should be enabled");
-        }
 
 
             if (!errors.isEmpty()) {

@@ -107,15 +107,7 @@ public class UserServiceTestWithConfigurationAndMoking extends BaseUserServiceTe
         getUserService().save(user);
     }
 
-    @Test(expected = ValidationException.class)
-    public void test_add_user_without_enable_function() throws ValidationException{
-        User user = new User();
-        user.setEmail("ciuve@gmail.com");
-        user.setPassword("1111");
-        user.setFirstName("Bogdi");
-        user.setLastName("Ciuve");
-        getUserService().save(user);
-    }
+
 
     @Test(expected = ValidationException.class)
     public void test_add_empty_user() throws ValidationException{
@@ -128,33 +120,6 @@ public class UserServiceTestWithConfigurationAndMoking extends BaseUserServiceTe
     public void test_delete_nonexistent_user() throws ValidationException{
         Assert.assertFalse(getUserService().delete(4l));
     }
-
-//    @Test
-//    public void test_add_delete() throws Exception{
-//        User user = new User();
-//        user.setEmail("ciuve@gmail.com");
-//        user.setPassword("1111");
-//        user.setFirstName("Bogdi");
-//        user.setLastName("Ciuve");
-//        user.setEnabled(true);
-//        user.setId(1l);
-//
-//        when(getUserService().listAll()).thenReturn(Arrays.asList(user));
-//
-//        getUserService().save(user);
-//        Assert.assertEquals(1, getUserService().listAll().size());
-//        User fromDb = getUserService().listAll().iterator().next();
-//        Assert.assertNotNull(fromDb);
-//        Assert.assertTrue(fromDb.getId() > 0);
-//        user.setId(fromDb.getId());
-//        Assert.assertEquals(user, fromDb);
-//
-//
-//        Assert.assertTrue(getUserService().delete(fromDb.getId()));
-//        Assert.assertFalse(getUserService().delete(fromDb.getId()));
-//        Assert.assertEquals(0, getUserService().listAll().size());
-//
-//    }
 
     @Test
     public void test_search_by_name_no_result() throws ValidationException{
